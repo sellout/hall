@@ -1,0 +1,5 @@
+{ name : Text
+, baseEdition : ./Type
+, additionalExtensions : List Text
+, unsupportedExtensions : List Text
+}

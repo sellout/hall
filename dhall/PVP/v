@@ -1,0 +1,26 @@
+{-| Builds a version as boilerplate-free as possible
+
+E.g., `v [ 1, 2, 3, 4 ]` == 1.2.3.4
+Any required missing elements are treated as zero
+E.g., `v [ 1 ]` == 1.0.0
+-}
+let P =
+      https://raw.githubusercontent.com/dhall-lang/dhall-lang/v20.1.0/Prelude/package.dhall
+        sha256:26b0ef498663d269e4dc6a82b0ee289ec565d683ef4c00d0ebdd25333a5a3c98
+
+in  λ(components : List Natural) →
+      { major =
+        { a = P.Optional.default Natural 0 (List/head Natural components)
+        , b =
+            P.Optional.default
+              Natural
+              0
+              (List/head Natural (P.List.drop 1 Natural components))
+        }
+      , minor =
+          P.Optional.default
+            Natural
+            0
+            (List/head Natural (P.List.drop 2 Natural components))
+      , additional = P.List.drop 3 Natural components
+      }

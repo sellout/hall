@@ -1,0 +1,15 @@
+λ(x : ./Version) →
+      Natural/show x.major.a
+  ++  "."
+  ++  Natural/show x.major.b
+  ++  "."
+  ++  Natural/show x.minor
+  ++  List/fold
+        Natural
+        x.additional
+        Text
+        ( λ(component : Natural) →
+          λ(tail : Text) →
+            "." ++ Natural/show component ++ tail
+        )
+        ""

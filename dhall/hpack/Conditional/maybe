@@ -1,0 +1,38 @@
+{-|
+Generates a conditional expression in Cabal _only_ if there the
+`minimumGhcVersion` is less than the version it’s conditinolazed on.
+
+__TODO__: If this doesn’t create the conditional, then the caller needs to
+          manually add the `body` to the containing section.
+-}
+let Pvp = ../../PVP/package.dhall
+
+let Alternative = ../Alternative/Type
+
+let Conditional = ./Type
+
+in  λ(ghcVersion : Pvp.Version) →
+    λ(minimumGhcVersion : Pvp.Version) →
+    λ(body : Alternative) →
+    λ(alt : Optional Alternative) →
+      if    Pvp.lessThanEqual ghcVersion minimumGhcVersion
+      then  [] : List Conditional
+      else  [ merge
+                { None =
+                    Conditional.If
+                      (   { condition =
+                              "impl(ghc >= " ++ Pvp.show ghcVersion ++ ")"
+                          }
+                        ⫽ body
+                      )
+                , Some =
+                    λ(els : Alternative) →
+                      Conditional.OrElse
+                        { condition =
+                            "impl(ghc >= " ++ Pvp.show ghcVersion ++ ")"
+                        , `then` = body
+                        , `else` = els
+                        }
+                }
+                alt
+            ]

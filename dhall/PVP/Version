@@ -1,0 +1,4 @@
+{ major : { a : Natural, b : Natural }
+, minor : Natural
+, additional : List Natural
+}

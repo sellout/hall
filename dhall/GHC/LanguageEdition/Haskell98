@@ -1,0 +1,16 @@
+  { name = "Haskell98"
+  , year = 1998
+  , extensions =
+    [ "CUSKs"
+    , "DatatypeContexts"
+    , "DeepSubsumption"
+    , "FieldSelectors"
+    , "ImplicitPrelude"
+    , "MonomorphismRestriction"
+    , "NPlusKPatterns"
+    , "NondecreasingIndentation"
+    , "StarIsType"
+    , "TraditionalRecordSyntax"
+    ]
+  }
+: ./Type

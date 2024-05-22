@@ -1,0 +1,20 @@
+{-| Compare two [PVP](https://pvp.haskell.org/)-compliant version numbers.
+
+__FIXME__: This doesn’t yet compare any additional components.
+-}
+let P =
+      https://raw.githubusercontent.com/dhall-lang/dhall-lang/v20.1.0/Prelude/package.dhall
+        sha256:26b0ef498663d269e4dc6a82b0ee289ec565d683ef4c00d0ebdd25333a5a3c98
+
+let Version = ./Version
+
+in  λ(x : Version) →
+    λ(y : Version) →
+          P.Natural.lessThan x.major.a y.major.a
+      ||      P.Natural.equal x.major.a y.major.a
+          &&  (     P.Natural.lessThan x.major.b y.major.b
+                ||      P.Natural.equal x.major.b y.major.b
+                    &&  (     P.Natural.lessThan x.minor y.minor
+                          ||  P.Natural.equal x.minor y.minor && True
+                        )
+              )

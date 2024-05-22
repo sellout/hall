@@ -1,0 +1,7 @@
+{ buildable = None Bool
+, cpp-options = [] : List Text
+, default-extensions = [] : List Text
+, dependencies = [] : List Text
+, ghc-options = [] : List Text
+, main = None Text
+}

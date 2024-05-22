@@ -1,0 +1,5 @@
+let Alternative = ../Alternative/Type
+
+in  < If : { condition : Text } ⩓ Alternative
+    | OrElse : { condition : Text, `then` : Alternative, `else` : Alternative }
+    >

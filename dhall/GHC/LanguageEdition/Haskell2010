@@ -1,0 +1,19 @@
+  { name = "Haskell2010"
+  , year = 2010
+  , extensions =
+    [ "CUSKs"
+    , "DatatypeContexts"
+    , "DeepSubsumption"
+    , "DoAndIfThenElse"
+    , "EmptyDataDecls"
+    , "FieldSelectors"
+    , "ForeignFunctionInterface"
+    , "ImplicitPrelude"
+    , "MonomorphismRestriction"
+    , "PatternGuards"
+    , "RelaxedPolyRec"
+    , "StarIsType"
+    , "TraditionalRecordSyntax"
+    ]
+  }
+: ./Type

@@ -16,7 +16,10 @@ let GHC2021 = ./GHC2021
 
 let GHC2024 = ./GHC2024
 
-let versionExtensions =
+let -- Adds `extensions` to either `additionalExtensions` or
+    -- `unsupportedExtensions` depending on whether `minimumGhcVersion` supports
+    -- them.
+    versionExtensions =
       λ(ghcVersion : Pvp.Version) →
       λ(minimumGhcVersion : Pvp.Version) →
       λ(extensions : List Text) →
@@ -36,72 +39,72 @@ let versionExtensions =
 let ghc2021CompatibleWith
     : Pvp.Version → CompositeEdition
     = λ(minimumGhcVersion : Pvp.Version) →
-        versionExtensions
-          ghc.v8-10-1.version
-          minimumGhcVersion
-          [ "DeriveLift", "ImportQualifiedPost", "StandaloneKindSignatures" ]
-          ( versionExtensions
-              ghc.v8-6-1.version
-              minimumGhcVersion
-              [ "NumericUnderscores" ]
-              ( versionExtensions
-                  ghc.v8-4-1.version
-                  minimumGhcVersion
-                  [ "HexFloatLiterals" ]
-                  ( versionExtensions
-                      ghc.v8-0-1.version
-                      minimumGhcVersion
-                      [ "TypeApplications" ]
-                      (   ( if    Pvp.lessThanEqual
-                                    ghc.v9-2-1.version
-                                    minimumGhcVersion
-                            then  { baseEdition = GHC2021
-                                  , additionalExtensions = [] : List Text
-                                  , unsupportedExtensions = [] : List Text
-                                  }
-                            else  { baseEdition = Haskell2010
-                                  , additionalExtensions =
-                                    [ "BangPatterns"
-                                    , "BinaryLiterals"
-                                    , "ConstrainedClassMethods"
-                                    , "ConstraintKinds"
-                                    , "DeriveDataTypeable"
-                                    , "DeriveFoldable"
-                                    , "DeriveFunctor"
-                                    , "DeriveGeneric"
-                                    , "DeriveTraversable"
-                                    , "DerivingStrategies"
-                                    , "EmptyCase"
-                                    , "EmptyDataDeriving"
-                                    , "ExistentialQuantification"
-                                    , "ExplicitForAll"
-                                    , "FlexibleContexts"
-                                    , "FlexibleInstances"
-                                    , "GADTSyntax"
-                                    , "GeneralizedNewtypeDeriving"
-                                    , "InstanceSigs"
-                                    , "KindSignatures"
-                                    , "MultiParamTypeClasses"
-                                    , "NamedFieldPuns"
-                                    , "NamedWildCards"
-                                    , "PolyKinds"
-                                    , "PostfixOperators"
-                                    , "RankNTypes"
-                                    , "ScopedTypeVariables"
-                                    , "StandaloneDeriving"
-                                    , "TupleSections"
-                                    , "TypeOperators"
-                                    , "TypeSynonymInstances"
-                                    , "NoExplicitNamespaces"
-                                    ]
-                                  , unsupportedExtensions = [] : List Text
-                                  }
-                          )
-                        ⫽ { name = GHC2021.name }
-                      )
-                  )
-              )
-          )
+        if    Pvp.lessThanEqual ghc.v9-2-1.version minimumGhcVersion
+        then  { name = GHC2021.name
+              , baseEdition = GHC2021
+              , additionalExtensions = [] : List Text
+              , unsupportedExtensions = [] : List Text
+              }
+        else  versionExtensions
+                ghc.v8-10-1.version
+                minimumGhcVersion
+                [ "DeriveLift"
+                , "ImportQualifiedPost"
+                , "StandaloneKindSignatures"
+                ]
+                ( versionExtensions
+                    ghc.v8-6-1.version
+                    minimumGhcVersion
+                    [ "NumericUnderscores" ]
+                    ( versionExtensions
+                        ghc.v8-4-1.version
+                        minimumGhcVersion
+                        [ "HexFloatLiterals" ]
+                        ( versionExtensions
+                            ghc.v8-0-1.version
+                            minimumGhcVersion
+                            [ "TypeApplications" ]
+                            { name = GHC2021.name
+                            , baseEdition = Haskell2010
+                            , additionalExtensions =
+                              [ "BangPatterns"
+                              , "BinaryLiterals"
+                              , "ConstrainedClassMethods"
+                              , "ConstraintKinds"
+                              , "DeriveDataTypeable"
+                              , "DeriveFoldable"
+                              , "DeriveFunctor"
+                              , "DeriveGeneric"
+                              , "DeriveTraversable"
+                              , "DerivingStrategies"
+                              , "EmptyCase"
+                              , "EmptyDataDeriving"
+                              , "ExistentialQuantification"
+                              , "ExplicitForAll"
+                              , "FlexibleContexts"
+                              , "FlexibleInstances"
+                              , "GADTSyntax"
+                              , "GeneralizedNewtypeDeriving"
+                              , "InstanceSigs"
+                              , "KindSignatures"
+                              , "MultiParamTypeClasses"
+                              , "NamedFieldPuns"
+                              , "NamedWildCards"
+                              , "PolyKinds"
+                              , "PostfixOperators"
+                              , "RankNTypes"
+                              , "ScopedTypeVariables"
+                              , "StandaloneDeriving"
+                              , "TupleSections"
+                              , "TypeOperators"
+                              , "TypeSynonymInstances"
+                              , "NoExplicitNamespaces"
+                              ]
+                            , unsupportedExtensions = [] : List Text
+                            }
+                        )
+                    )
+                )
 
 let ghc2024CompatibleWith
     : Pvp.Version → CompositeEdition

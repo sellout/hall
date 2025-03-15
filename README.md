@@ -1,6 +1,6 @@
 # $^{d}ha_{ske}ll$
 
-[![built with garnix](https://img.shields.io/endpoint?url=https%3A%2F%2Fgarnix.io%2Fapi%2Fbadges%2Fsellout%2Fhall)](https://garnix.io)
+[![built with garnix](https://img.shields.io/endpoint?url=https%3A%2F%2Fgarnix.io%2Fapi%2Fbadges%2Fsellout%2Fhall)](https://garnix.io/repo/sellout/hall)
 
 The corridor connecting Dhall and Haskell
 

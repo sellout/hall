@@ -280,10 +280,6 @@
     },
     "root": {
       "inputs": {
-        "bash-strict-mode": [
-          "flaky",
-          "bash-strict-mode"
-        ],
         "flake-utils": [
           "flaky",
           "flake-utils"
@@ -292,6 +288,10 @@
         "nixpkgs": [
           "flaky",
           "nixpkgs"
+        ],
+        "systems": [
+          "flaky",
+          "systems"
         ]
       }
     },

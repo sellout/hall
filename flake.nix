@@ -28,7 +28,9 @@
   }: let
     pname = "hall";
 
-    supportedSystems = import systems;
+    supportedSystems =
+      ## TODO: cborg 0.2.10 (a dependency of Dhall) doesn’t build on i686-linux.
+      nixpkgs.lib.remove flake-utils.lib.system.i686-linux (import systems);
   in
     {
       schemas = {
@@ -77,16 +79,19 @@
       packages = {
         default = self.packages.${system}.${pname};
 
-        "${pname}" = pkgs.checkedDrv (pkgs.dhallPackages.buildDhallDirectoryPackage {
-          src = "${src}/dhall";
-          name = pname;
-          dependencies = [pkgs.dhallPackages.Prelude];
-          document = true;
-        });
+        "${pname}" = pkgs.checkedDrv (
+          pkgs.dhallPackages.buildDhallDirectoryPackage {
+            src = "${src}/dhall";
+            name = pname;
+            dependencies = [pkgs.dhallPackages.Prelude];
+            document = true;
+          }
+        );
       };
 
-      projectConfigurations =
-        flaky.lib.projectConfigurations.dhall {inherit pkgs self;};
+      projectConfigurations = flaky.lib.projectConfigurations.dhall {
+        inherit pkgs self supportedSystems;
+      };
 
       devShells =
         self.projectConfigurations.${system}.devShells

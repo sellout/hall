@@ -15,24 +15,22 @@
       "dhall.cachix.org-1:8laGciue2JBwD49ICFtg+cIF8ddDaW7OFBjDb/dHEAo="
     ];
     ## Isolate the build.
-    registries = false;
     sandbox = "relaxed";
+    use-registries = false;
   };
 
   outputs = {
-    bash-strict-mode,
     flake-utils,
     flaky,
     nixpkgs,
     self,
+    systems,
   }: let
     pname = "hall";
 
     supportedSystems =
-      nixpkgs.lib.remove
-      ## NB: cborg-0.2.9.0, needed by Dhall, doesn’t compile on i686-linux.
-      flake-utils.lib.system.i686-linux
-      flaky.lib.defaultSystems;
+      ## TODO: cborg 0.2.10 (a dependency of Dhall) doesn’t build on i686-linux.
+      nixpkgs.lib.remove flake-utils.lib.system.i686-linux (import systems);
   in
     {
       schemas = {
@@ -66,36 +64,32 @@
       homeConfigurations =
         builtins.listToAttrs
         (builtins.map
-          (flaky.lib.homeConfigurations.example
-            self
-            [
-              ({pkgs, ...}: {
-                ## TODO: Is there something more like `dhallWithPackages`?
-                home.packages = [pkgs.dhallPackages.${pname}];
-              })
-            ])
+          (flaky.lib.homeConfigurations.example self
+            ## TODO: Is there something more like `dhallWithPackages`?
+            [({pkgs, ...}: {home.packages = [pkgs.dhallPackages.${pname}];})])
           supportedSystems);
     }
     // flake-utils.lib.eachSystem supportedSystems (system: let
-      pkgs = import nixpkgs {inherit system;};
+      pkgs = nixpkgs.legacyPackages.${system}.appendOverlays [
+        flaky.overlays.default
+      ];
 
       src = pkgs.lib.cleanSource ./.;
     in {
       packages = {
         default = self.packages.${system}.${pname};
 
-        "${pname}" =
-          bash-strict-mode.lib.checkedDrv
-          pkgs
-          (pkgs.dhallPackages.buildDhallDirectoryPackage {
+        "${pname}" = pkgs.checkedDrv (
+          pkgs.dhallPackages.buildDhallDirectoryPackage {
             src = "${src}/dhall";
             name = pname;
             dependencies = [pkgs.dhallPackages.Prelude];
             document = true;
-          });
+          }
+        );
       };
 
-      projectConfigurations = flaky.lib.projectConfigurations.default {
+      projectConfigurations = flaky.lib.projectConfigurations.dhall {
         inherit pkgs self supportedSystems;
       };
 
@@ -110,8 +104,8 @@
     ## Flaky should generally be the source of truth for its inputs.
     flaky.url = "github:sellout/flaky";
 
-    bash-strict-mode.follows = "flaky/bash-strict-mode";
     flake-utils.follows = "flaky/flake-utils";
     nixpkgs.follows = "flaky/nixpkgs";
+    systems.follows = "flaky/systems";
   };
 }

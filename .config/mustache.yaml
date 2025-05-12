@@ -1,12 +1,11 @@
 {
-  "project": {
-    "description": "A collection of various tools in Dhall for working with Haskell.",
-    "name": "hall",
-    "repo": "sellout/hall",
-    "summary": "The corridor connecting Dhall and Haskell",
-    "version": "0.1.0"
-  },
-  "type": {
-    "name": "dhall"
-  }
+  "project":
+    {
+      "description": "A collection of various tools in Dhall for working with Haskell.",
+      "name": "hall",
+      "repo": "sellout/hall",
+      "summary": "The corridor connecting Dhall and Haskell",
+      "version": "0.1.0",
+    },
+  "type": { "name": "dhall" },
 }

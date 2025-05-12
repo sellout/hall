@@ -1,6 +1,6 @@
 # $^{d}ha_{ske}ll$
 
-[![built with garnix](https://img.shields.io/endpoint?url=https%3A%2F%2Fgarnix.io%2Fapi%2Fbadges%2Fsellout%2Fhall)](https://garnix.io)
+[![built with garnix](https://img.shields.io/endpoint?url=https%3A%2F%2Fgarnix.io%2Fapi%2Fbadges%2Fsellout%2Fhall)](https://garnix.io/repo/sellout/hall)
 
 The corridor connecting Dhall and Haskell
 
@@ -8,7 +8,11 @@ A collection of various tools in Dhall for working with Haskell.
 
 ## usage
 
-This is especially helpful with <!-- vale Vale.Terms = NO --> [hpack-dhall](https://github.com/cabalism/hpack-dhall) or [dhall-to-cabal](https://github.com/dhall-lang/dhall-to-cabal), <!-- vale Vale.Terms = YES --> but the types and functions here are general enough to use whenever you work with Haskell from Dhall.
+<!-- vale Vale.Terms = NO -->
+
+This is especially helpful with [hpack-dhall](https://github.com/cabalism/hpack-dhall) or [dhall-to-cabal](https://github.com/dhall-lang/dhall-to-cabal), but the types and functions here are general enough to use whenever you work with Haskell from Dhall.
+
+<!-- vale Vale.Terms = YES -->
 
 ## documentation
 

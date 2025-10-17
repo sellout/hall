@@ -1,0 +1,5 @@
+let schema = { Type = ./Type, default = ./default }
+
+let testMinimalRequiredFields = schema::{ owner = "sellout", repo = "hall" }
+
+in  schema

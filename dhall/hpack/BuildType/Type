@@ -1,0 +1,5 @@
+{-|
+
+NB: `Hooks` may not be supported by hpack yet.
+-}
+< Simple | Hooks | Configure | Make | Custom >

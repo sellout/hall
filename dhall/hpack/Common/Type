@@ -1,0 +1,34 @@
+nlet P =
+      https://raw.githubusercontent.com/dhall-lang/dhall-lang/v22.0.0/Prelude/package.dhall
+        sha256:1c7622fdc868fe3a23462df3e6f533e50fdc12ecf3b42c0bb45c328ec8c4293e
+
+let Conditional = ../Conditional/Type
+
+let Dependency = ../Dependency/Type
+
+in  λ(a : Type) →
+      { buildable : Bool
+      , source-dirs : List Text
+      , default-extensions : List Text
+      , other-extensions : List Text
+      , ghc-options : List Text
+      , ghc-prof-options : List Text
+      , ghcjs-options : List Text
+      , cpp-options : List Text
+      , cc-options : List Text
+      , c-sources : List Text
+      , cxx-options : List Text
+      , cxx-sources : List Text
+      , js-sources : List Text
+      , extra-lib-dirs : List Text
+      , extra-libraries : List Text
+      , include-dirs : List Text
+      , frameworks : List Text
+      , extra-frameworks-dirs : List Text
+      , ld-options : List Text
+      , dependencies : P.Map.Type Text Dependency
+      , pkg-config-dependencies : P.Map.Type Text Dependency
+      , build-tools : List Text
+      , system-build-tools : List Text
+      , when : List (Conditional a)
+      }

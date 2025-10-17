@@ -1,1 +1,1 @@
-{ Type = ./Type, maybe = ./maybe }
+{ Type = ./Type, ifGhcImpl = ./ifGhcImpl, maybe = ./maybe }

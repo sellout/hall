@@ -1,0 +1,9 @@
+let Common = ../Common/package.dhall
+
+in  λ(a : Type) →
+        Common.default a
+      ∧ { generated-exposed-modules = [] : List Text
+        , generated-other-modules = [] : List Text
+        , reexported-modules = [] : List Text
+        , signatures = [] : List Text
+        }

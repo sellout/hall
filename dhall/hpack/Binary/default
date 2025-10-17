@@ -1,4 +1,13 @@
+{-|
+
+This needs to have defaults for all fields, because we don’t know which ones
+will be set at the top level vs in `Conditional`s.
+-}
 let Common = ../Common/package.dhall
 
 in  λ(a : Type) →
-      Common.default a ∧ { generated-other-modules = [] : List Text }
+        Common.default a
+      ∧ { main = None Text
+        , other-modules = [] : List Text
+        , generated-other-modules = [] : List Text
+        }

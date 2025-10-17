@@ -5,6 +5,7 @@
 , CustomSetup = ./CustomSetup/package.dhall
 , Default = ./Default/package.dhall
 , Dependency = ./Dependency/package.dhall
+, Dependencies = ./Dependencies/package.dhall
 , Executable = ./Executable/package.dhall
 , Flag = ./Flag/package.dhall
 , Github = ./Github/package.dhall

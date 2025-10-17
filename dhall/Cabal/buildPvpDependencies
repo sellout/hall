@@ -6,9 +6,13 @@ let P =
 
 let Pvp = ../PVP/package.dhall
 
+let Dependency = ../hpack/Dependency/Type
+
 let buildPvpDependency = ./buildPvpDependency
 
 in  P.List.map
-      { name : Text, versions : List Pvp.Version }
-      Text
-      buildPvpDependency
+      (P.Map.Entry Text (List Pvp.Version))
+      (P.Map.Entry Text Dependency)
+      ( λ(entry : P.Map.Entry Text (List Pvp.Version)) →
+          entry ⫽ { mapValue = buildPvpDependency entry.mapValue }
+      )

@@ -1,1 +1,1 @@
-{ version : List Text, mixin : List Text }
+{ version : Text, mixin : List Text }

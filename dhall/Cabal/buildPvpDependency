@@ -6,14 +6,16 @@ let P =
 
 let Pvp = ../PVP/package.dhall
 
-in  λ(dep : { name : Text, versions : List Pvp.Version }) →
-          dep.name
-      ++  ( if    P.List.null Pvp.Version dep.versions
+let Dependency = ../hpack/Dependency/Type
+
+in  λ(versions : List Pvp.Version) →
+        { version =
+            if    P.List.null Pvp.Version versions
             then  ""
-            else      " ^>= {"
+            else      "^>= {"
                   ++  ( List/fold
                           Pvp.Version
-                          dep.versions
+                          versions
                           { comma : Bool, res : Text }
                           ( λ(v : Pvp.Version) →
                             λ(acc : { comma : Bool, res : Text }) →
@@ -27,4 +29,6 @@ in  λ(dep : { name : Text, versions : List Pvp.Version }) →
                           { comma = False, res = "" }
                       ).res
                   ++  "}"
-          )
+        , mixin = [] : List Text
+        }
+      : Dependency

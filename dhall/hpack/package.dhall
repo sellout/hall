@@ -11,4 +11,5 @@
 , Library = ./Library/package.dhall
 , Package = ./Package/package.dhall
 , Test = ./Test/package.dhall
+, Verbatim = ./Verbatim/package.dhall
 }

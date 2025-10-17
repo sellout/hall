@@ -48,7 +48,7 @@ in  λ(rec : (Type → Type) → Type) →
         , extra-doc-files = [] : List Text
         , data-files = [] : List Text
         , data-dir = None Text
-        , github = None Github
+        , github = None Text
         , git = None Text
         , custom-setup = None CustomSetup
         , flags = [] : P.Map.Type Text Flag

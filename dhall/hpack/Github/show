@@ -1,0 +1,7 @@
+\(github : ./Type) ->
+      github.owner
+  ++  "/"
+  ++  github.repo
+  ++  merge
+        { None = "", Some = \(subdir : Text) -> "/" ++ subdir }
+        github.subdir

@@ -66,7 +66,7 @@ in  λ(rec : (Type → Type) → Type) →
         , extra-doc-files : List Text
         , data-files : List Text
         , data-dir : Optional Text
-        , github : Optional Github
+        , github : Optional Text
         , git : Optional Text
         , custom-setup : Optional CustomSetup
         , flags : P.Map.Type Text Flag

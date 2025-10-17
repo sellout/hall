@@ -7,32 +7,14 @@ __TODO__: If this doesn’t create the conditional, then the caller needs to
 -}
 let Pvp = ../../PVP/package.dhall
 
-let Alternative = ../Alternative/Type
-
 let Conditional = ./Type
 
-in  λ(ghcVersion : Pvp.Version) →
+in  λ(a : Type) →
     λ(minimumGhcVersion : Pvp.Version) →
-    λ(body : Alternative) →
-    λ(alt : Optional Alternative) →
+    λ(comparator : Text) →
+    λ(ghcVersion : Pvp.Version) →
+    λ(body : a) →
+    λ(alt : Optional a) →
       if    Pvp.lessThanEqual ghcVersion minimumGhcVersion
-      then  [] : List Conditional
-      else  [ merge
-                { None =
-                    Conditional.If
-                      (   { condition =
-                              "impl(ghc >= " ++ Pvp.show ghcVersion ++ ")"
-                          }
-                        ⫽ body
-                      )
-                , Some =
-                    λ(els : Alternative) →
-                      Conditional.OrElse
-                        { condition =
-                            "impl(ghc >= " ++ Pvp.show ghcVersion ++ ")"
-                        , `then` = body
-                        , `else` = els
-                        }
-                }
-                alt
-            ]
+      then  [] : List (Conditional a)
+      else  [ ./ifGhcImpl a comparator ghcVersion body alt ]

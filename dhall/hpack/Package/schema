@@ -1,0 +1,12 @@
+{-| A schema for the `Package` type.
+
+    See ./Type for an explanation of the `rec` parameter.
+-}
+let schema =
+      λ(rec : (Type → Type) → Type) →
+        { Type = ./Type rec, default = ./default rec }
+
+let testMinimalRequiredFields =
+      (schema (λ(_ : Type → Type) → <>))::{ name = "test", version = "0.0.0" }
+
+in  schema

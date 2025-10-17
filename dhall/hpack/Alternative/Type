@@ -1,7 +1,0 @@
-{ buildable : Optional Bool
-, cpp-options : List Text
-, default-extensions : List Text
-, dependencies : List Text
-, ghc-options : List Text
-, main : Optional Text
-}

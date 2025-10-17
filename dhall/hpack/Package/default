@@ -1,0 +1,58 @@
+{-| A default value for the `Package` type, generally used via ./schema.
+
+    See ./Type for an explanation of the `rec` parameter.
+-}
+let P =
+      https://raw.githubusercontent.com/dhall-lang/dhall-lang/v22.0.0/Prelude/package.dhall
+        sha256:1c7622fdc868fe3a23462df3e6f533e50fdc12ecf3b42c0bb45c328ec8c4293e
+
+let Benchmark = ../Benchmark/package.dhall
+
+let BuildType = ../BuildType/Type
+
+let Common = ../Common/package.dhall
+
+let CustomSetup = ../CustomSetup/Type
+
+let Default = ../Default/Type
+
+let Executable = ../Executable/Type
+
+let Flag = ../Flag/Type
+
+let Github = ../Github/Type
+
+let Library = ../Library/Type
+
+let Test = ../Test/package.dhall
+
+in  λ(rec : (Type → Type) → Type) →
+        Common.default (rec Common.Type)
+      ∧ { synopsis = None Text
+        , description = None Text
+        , category = None Text
+        , stability = None Text
+        , homepage = None Text
+        , bug-reports = None Text
+        , author = [] : List Text
+        , maintainer = [] : List Text
+        , copyright = [] : List Text
+        , license = None Text
+        , license-file = [] : List Text
+        , tested-with = [] : List Text
+        , build-type = None BuildType
+        , extra-source-files = [] : List Text
+        , extra-doc-files = [] : List Text
+        , data-files = [] : List Text
+        , github = None Github
+        , git = None Text
+        , custom-setup = None CustomSetup
+        , flags = [] : P.Map.Type Text Flag
+        , library = None (rec Library)
+        , internal-libraries = [] : P.Map.Type Text (rec Library)
+        , executables = [] : P.Map.Type Text (rec Executable)
+        , executable = None (rec Executable)
+        , tests = [] : P.Map.Type Text (rec Test.Type)
+        , benchmarks = [] : P.Map.Type Text (rec Benchmark.Type)
+        , defaults = [] : List Default
+        }

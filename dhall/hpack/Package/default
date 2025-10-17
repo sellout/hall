@@ -1,6 +1,9 @@
 {-| A default value for the `Package` type, generally used via ./schema.
 
-    See ./Type for an explanation of the `rec` parameter.
+This needs to have defaults for all fields, because we don’t know which ones
+will be set at the top level vs in `Conditional`s.
+
+See ./Type for an explanation of the `rec` parameter.
 -}
 let P =
       https://prelude.dhall-lang.org/v20.1.0/package.dhall
@@ -44,6 +47,7 @@ in  λ(rec : (Type → Type) → Type) →
         , extra-source-files = [] : List Text
         , extra-doc-files = [] : List Text
         , data-files = [] : List Text
+        , data-dir = None Text
         , github = None Github
         , git = None Text
         , custom-setup = None CustomSetup

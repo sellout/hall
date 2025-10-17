@@ -1,0 +1,8 @@
+let schema = { Type = ./Type, default = ./default }
+
+let testMinimalRequiredFields =
+        assert
+      :   schema::{ default = True, manual = True }
+        ≡ schema.default ∧ { default = True, manual = True }
+
+in  schema

@@ -1,0 +1,4 @@
+let Common = ../Common/package.dhall
+
+in  λ(a : Type) →
+      Common.default a ∧ { generated-other-modules = [] : List Text }

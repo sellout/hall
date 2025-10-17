@@ -12,7 +12,7 @@ let buildPvpDependency = ./buildPvpDependency
 
 in  P.List.map
       (P.Map.Entry Text (List Pvp.Version))
-      (P.Map.Entry Text Dependency)
+      Dependency
       ( λ(entry : P.Map.Entry Text (List Pvp.Version)) →
-          entry ⫽ { mapValue = buildPvpDependency entry.mapValue }
+          buildPvpDependency entry.mapKey entry.mapValue
       )

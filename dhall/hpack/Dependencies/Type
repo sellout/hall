@@ -1,0 +1,7 @@
+{-|
+
+In order for hpack to allow us to specify mixins, we have to represent
+dependencies as a List of objects with a `name` field, rather than a `Map` with
+the names as the keys.
+-}
+let Dependency = ../Dependency/Type in List Dependency

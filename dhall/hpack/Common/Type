@@ -7,7 +7,7 @@ let Conditional = ../Conditional/Type
 let Dependency = ../Dependency/Type
 
 in  λ(a : Type) →
-      { buildable : Bool
+      { buildable : Optional Bool
       , source-dirs : List Text
       , default-extensions : List Text
       , other-extensions : List Text

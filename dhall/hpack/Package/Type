@@ -65,7 +65,7 @@ in  λ(rec : (Type → Type) → Type) →
         , extra-source-files : List Text
         , extra-doc-files : List Text
         , data-files : List Text
-        , data-dir : Text
+        , data-dir : Optional Text
         , github : Optional Github
         , git : Optional Text
         , custom-setup : Optional CustomSetup

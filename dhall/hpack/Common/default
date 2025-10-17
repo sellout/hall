@@ -1,3 +1,8 @@
+{-|
+
+This needs to have defaults for all fields, because we don’t know which ones
+will be set at the top level vs in `Conditional`s.
+-}
 let P =
       https://prelude.dhall-lang.org/v20.1.0/package.dhall
         sha256:26b0ef498663d269e4dc6a82b0ee289ec565d683ef4c00d0ebdd25333a5a3c98
@@ -7,7 +12,7 @@ let Conditional = ../Conditional/Type
 let Dependency = ../Dependency/Type
 
 in  λ(a : Type) →
-      { buildable = True
+      { buildable = None Bool
       , source-dirs = [] : List Text
       , default-extensions = [] : List Text
       , other-extensions = [] : List Text

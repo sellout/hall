@@ -8,8 +8,10 @@ let Pvp = ../PVP/package.dhall
 
 let Dependency = ../hpack/Dependency/Type
 
-in  λ(versions : List Pvp.Version) →
-        { version =
+in  λ(name : Text) →
+    λ(versions : List Pvp.Version) →
+        { name
+        , version =
             if    P.List.null Pvp.Version versions
             then  ""
             else      "^>= {"

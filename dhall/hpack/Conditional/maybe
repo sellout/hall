@@ -14,7 +14,7 @@ in  λ(a : Type) →
     λ(comparator : Text) →
     λ(ghcVersion : Pvp.Version) →
     λ(body : a) →
-    λ(alt : Optional a) →
+    λ(alt : a) →
       if    Pvp.lessThanEqual ghcVersion minimumGhcVersion
       then  [] : List (Conditional a)
       else  [ ./ifGhcImpl a comparator ghcVersion body alt ]

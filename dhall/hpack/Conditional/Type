@@ -1,4 +1,8 @@
-λ(a : Type) →
-  < When : { condition : Text, fields : a }
-  | If : { condition : Text, `then` : a, `else` : a }
-  >
+{-|
+
+TODO: Support `< When : { condition : Text, fields : a } | If { … } >` in
+      future. This isn’t currently possible because for the non-`else` variant,
+      `hpack` wants the fields to be merged with the `condition`. Address this
+      once Dhall has row types, or we get away from hpack as an intermediary.
+-}
+λ(a : Type) → { condition : Text, `then` : a, `else` : a }

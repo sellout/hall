@@ -9,14 +9,9 @@ in  λ(a : Type) →
     λ(comparator : Text) →
     λ(ghcVersion : Pvp.Version) →
     λ(body : a) →
-    λ(alt : Optional a) →
-      let condition =
-            "impl(ghc " ++ comparator ++ " " ++ Pvp.show ghcVersion ++ ")"
-
-      in  merge
-            { None = (Conditional a).When { condition, fields = body }
-            , Some =
-                λ(els : a) →
-                  (Conditional a).If { condition, `then` = body, `else` = els }
-            }
-            alt
+    λ(alt : a) →
+      { condition =
+          "impl(ghc " ++ comparator ++ " " ++ Pvp.show ghcVersion ++ ")"
+      , `then` = body
+      , `else` = alt
+      }

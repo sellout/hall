@@ -1,0 +1,6 @@
+{-| This type is specific to hpack, and it’s intended to allow overriding of
+    things that hpack doesn’t explicitly make available.
+
+See https://github.com/cabalism/hpack#passing-things-to-cabal-verbatim
+-}
+< String : Text | Number : Double | Boolean : Bool | Null >

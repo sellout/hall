@@ -6,6 +6,8 @@ let Conditional = ../Conditional/Type
 
 let Dependency = ../Dependency/Type
 
+let Verbatim = ../Verbatim/Type
+
 in  λ(a : Type) →
       { buildable : Optional Bool
       , source-dirs : List Text
@@ -31,4 +33,12 @@ in  λ(a : Type) →
       , build-tools : List Text
       , system-build-tools : List Text
       , when : List (Conditional a)
+      , -- This field isn’t listed with this type, but it’s described in
+        -- https://github.com/cabalism/hpack#passing-things-to-cabal-verbatim
+        --
+        -- NB: Despite this field being in `Common` (because it can be used in
+        --     all the same places as other `Common` fields), when provided at
+        --     the top-level it applies _to_ the top-level, not propagated
+        --     across each section like other `Common` fields are.
+        verbatim : Optional (P.Map.Type Text Verbatim)
       }

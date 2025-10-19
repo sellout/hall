@@ -1,0 +1,40 @@
+let DefaultLibrary = ../Library/DefaultType
+
+let DefaultType = ./DefaultType
+
+in  λ(a : Type) →
+    λ(self : DefaultType a) →
+        self.{ build-tools
+             , buildable
+             , c-sources
+             , cc-options
+             , cpp-options
+             , cxx-options
+             , cxx-sources
+             , default-extensions
+             , dependencies
+             , extra-frameworks-dirs
+             , extra-lib-dirs
+             , extra-libraries
+             , frameworks
+             , ghc-options
+             , ghc-prof-options
+             , ghcjs-options
+             , include-dirs
+             , js-sources
+             , ld-options
+             , other-extensions
+             , pkg-config-dependencies
+             , source-dirs
+             , system-build-tools
+             , verbatim
+             , when
+             , exposed
+             , exposed-modules
+             , generated-exposed-modules
+             , generated-other-modules
+             , other-modules
+             , reexported-modules
+             , signatures
+             }
+      : DefaultLibrary a

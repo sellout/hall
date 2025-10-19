@@ -2,8 +2,7 @@ let Common = ../Common/Type
 
 in  λ(a : Type) →
         Common a
-      ⩓ { exposed : Optional Bool
-        , visibility : Optional Text
+      ⩓ { exposed : Bool
         , exposed-modules : List Text
         , generated-exposed-modules : List Text
         , other-modules : List Text

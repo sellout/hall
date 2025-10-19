@@ -40,5 +40,5 @@ in  λ(a : Type) →
         --     all the same places as other `Common` fields), when provided at
         --     the top-level it applies _to_ the top-level, not propagated
         --     across each section like other `Common` fields are.
-        verbatim : Optional (P.Map.Type Text Verbatim)
+        verbatim : P.Map.Type Text Verbatim
       }

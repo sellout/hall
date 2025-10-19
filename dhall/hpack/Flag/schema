@@ -1,5 +1,7 @@
+let DefaultType = ./DefaultType
+
 let schema = { Type = ./Type, default = ./default }
 
 let testMinimalRequiredFields = schema::{ default = True, manual = True }
 
-in  schema
+in  schema : { Type : Type, default : DefaultType }

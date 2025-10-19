@@ -1,0 +1,44 @@
+let Combine = ../Combine/package.dhall
+
+let DefaultType = ./DefaultType
+
+in  λ(a : Type) →
+    λ(combine : { buildable : Combine.Type Bool }) →
+    λ(left : DefaultType a) →
+    λ(right : DefaultType a) →
+        { buildable =
+            Combine.optional
+              Bool
+              combine.buildable
+              left.buildable
+              right.buildable
+        , source-dirs = left.source-dirs # right.source-dirs
+        , default-extensions =
+            left.default-extensions # right.default-extensions
+        , other-extensions = left.other-extensions # right.other-extensions
+        , ghc-options = left.ghc-options # right.ghc-options
+        , ghc-prof-options = left.ghc-prof-options # right.ghc-prof-options
+        , ghcjs-options = left.ghcjs-options # right.ghcjs-options
+        , cpp-options = left.cpp-options # right.cpp-options
+        , cc-options = left.cc-options # right.cc-options
+        , c-sources = left.c-sources # right.c-sources
+        , cxx-options = left.cxx-options # right.cxx-options
+        , cxx-sources = left.cxx-sources # right.cxx-sources
+        , js-sources = left.js-sources # right.js-sources
+        , extra-lib-dirs = left.extra-lib-dirs # right.extra-lib-dirs
+        , extra-libraries = left.extra-libraries # right.extra-libraries
+        , include-dirs = left.include-dirs # right.include-dirs
+        , frameworks = left.frameworks # right.frameworks
+        , extra-frameworks-dirs =
+            left.extra-frameworks-dirs # right.extra-frameworks-dirs
+        , ld-options = left.ld-options # right.ld-options
+        , dependencies = left.dependencies # right.dependencies
+        , pkg-config-dependencies =
+            left.pkg-config-dependencies # right.pkg-config-dependencies
+        , build-tools = left.build-tools # right.build-tools
+        , system-build-tools =
+            left.system-build-tools # right.system-build-tools
+        , when = left.when # right.when
+        , verbatim = left.verbatim # right.verbatim
+        }
+      : DefaultType a

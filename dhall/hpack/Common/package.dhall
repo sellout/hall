@@ -1,1 +1,6 @@
-{ Type = ./Type, default = ./default, schema = ./schema }
+{ DefaultType = ./DefaultType
+, Type = ./Type
+, combine = ./combine
+, default = ./default
+, schema = ./schema
+}

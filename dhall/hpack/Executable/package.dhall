@@ -1,1 +1,1 @@
-{ Type = ./Type, default = ./default, schema = ./schema }
+../Binary/package.dhall

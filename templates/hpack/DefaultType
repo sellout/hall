@@ -1,0 +1,6 @@
+{-|
+
+This needs to have defaults for all fields, because we don’t know which ones
+will be set at the top level vs in `Conditional`s.
+-}
+./Type

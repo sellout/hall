@@ -1,0 +1,19 @@
+let Combine = ../Combine/package.dhall
+
+let Common = ../Common/package.dhall
+
+let DefaultType = ./DefaultType
+
+let extractCommon = ./extractCommon
+
+in  λ(a : Type) →
+    λ(combine : { buildable : Combine.Type Bool }) →
+    λ(left : DefaultType a) →
+    λ(right : DefaultType a) →
+          Common.combine
+            a
+            combine.{ buildable }
+            (extractCommon a left)
+            (extractCommon a right)
+        ∧ {=}
+      : DefaultType a

@@ -1,0 +1,5 @@
+let Library = ../Library/Type
+
+let Visibility = ../Visibility/Type
+
+in  λ(a : Type) → Library a ⩓ { visibility : Visibility }

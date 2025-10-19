@@ -1,0 +1,33 @@
+let DefaultCommon = ../Common/DefaultType
+
+let DefaultType = ./DefaultType
+
+in  λ(rec : (Type → Type) → Type) →
+    λ(self : DefaultType rec) →
+        self.{ build-tools
+             , buildable
+             , c-sources
+             , cc-options
+             , cpp-options
+             , cxx-options
+             , cxx-sources
+             , default-extensions
+             , dependencies
+             , extra-frameworks-dirs
+             , extra-lib-dirs
+             , extra-libraries
+             , frameworks
+             , ghc-options
+             , ghc-prof-options
+             , ghcjs-options
+             , include-dirs
+             , js-sources
+             , ld-options
+             , other-extensions
+             , pkg-config-dependencies
+             , source-dirs
+             , system-build-tools
+             , verbatim
+             , when
+             }
+      : DefaultCommon (rec DefaultCommon)

@@ -1,4 +1,13 @@
-let schema = λ(a : Type) → { Type = ./Type a, default = ./default a }
+let DefaultType = ./DefaultType
+
+let Self = ./Type
+
+let default = ./default
+
+let schema =
+      λ(a : Type) →
+          { Type = Self a, default = default a }
+        : { Type : Type, default : DefaultType a }
 
 let testMinimalRequiredFields = (schema <>)::{=}
 

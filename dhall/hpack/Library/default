@@ -1,18 +1,15 @@
-{-|
-
-This needs to have defaults for all fields, because we don’t know which ones
-will be set at the top level vs in `Conditional`s.
--}
 let Common = ../Common/package.dhall
 
+let DefaultType = ./DefaultType
+
 in  λ(a : Type) →
-        Common.default a
-      ∧ { exposed = Some True
-        , visibility = None Text
-        , exposed-modules = [] : List Text
-        , generated-exposed-modules = [] : List Text
-        , other-modules = [] : List Text
-        , generated-other-modules = [] : List Text
-        , reexported-modules = [] : List Text
-        , signatures = [] : List Text
-        }
+          Common.default a
+        ∧ { exposed = True
+          , exposed-modules = [] : List Text
+          , generated-exposed-modules = [] : List Text
+          , other-modules = [] : List Text
+          , generated-other-modules = [] : List Text
+          , reexported-modules = [] : List Text
+          , signatures = [] : List Text
+          }
+      : DefaultType a

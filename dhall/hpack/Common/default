@@ -1,8 +1,3 @@
-{-|
-
-This needs to have defaults for all fields, because we don’t know which ones
-will be set at the top level vs in `Conditional`s.
--}
 let P =
       https://prelude.dhall-lang.org/v20.1.0/package.dhall
         sha256:26b0ef498663d269e4dc6a82b0ee289ec565d683ef4c00d0ebdd25333a5a3c98
@@ -13,30 +8,33 @@ let Dependencies = ../Dependencies/Type
 
 let Verbatim = ../Verbatim/Type
 
+let DefaultType = ./DefaultType
+
 in  λ(a : Type) →
-      { buildable = None Bool
-      , source-dirs = [] : List Text
-      , default-extensions = [] : List Text
-      , other-extensions = [] : List Text
-      , ghc-options = [] : List Text
-      , ghc-prof-options = [] : List Text
-      , ghcjs-options = [] : List Text
-      , cpp-options = [] : List Text
-      , cc-options = [] : List Text
-      , c-sources = [] : List Text
-      , cxx-options = [] : List Text
-      , cxx-sources = [] : List Text
-      , js-sources = [] : List Text
-      , extra-lib-dirs = [] : List Text
-      , extra-libraries = [] : List Text
-      , include-dirs = [] : List Text
-      , frameworks = [] : List Text
-      , extra-frameworks-dirs = [] : List Text
-      , ld-options = [] : List Text
-      , dependencies = [] : Dependencies
-      , pkg-config-dependencies = [] : Dependencies
-      , build-tools = [] : List Text
-      , system-build-tools = [] : List Text
-      , when = [] : List (Conditional a)
-      , verbatim = None (P.Map.Type Text Verbatim)
-      }
+        { buildable = None Bool
+        , source-dirs = [] : List Text
+        , default-extensions = [] : List Text
+        , other-extensions = [] : List Text
+        , ghc-options = [] : List Text
+        , ghc-prof-options = [] : List Text
+        , ghcjs-options = [] : List Text
+        , cpp-options = [] : List Text
+        , cc-options = [] : List Text
+        , c-sources = [] : List Text
+        , cxx-options = [] : List Text
+        , cxx-sources = [] : List Text
+        , js-sources = [] : List Text
+        , extra-lib-dirs = [] : List Text
+        , extra-libraries = [] : List Text
+        , include-dirs = [] : List Text
+        , frameworks = [] : List Text
+        , extra-frameworks-dirs = [] : List Text
+        , ld-options = [] : List Text
+        , dependencies = [] : Dependencies
+        , pkg-config-dependencies = [] : Dependencies
+        , build-tools = [] : List Text
+        , system-build-tools = [] : List Text
+        , when = [] : List (Conditional a)
+        , verbatim = [] : P.Map.Type Text Verbatim
+        }
+      : DefaultType a

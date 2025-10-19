@@ -19,7 +19,7 @@ let CustomSetup = ../CustomSetup/Type
 
 let Default = ../Default/Type
 
-let Executable = ../Executable/Type
+let Executable = ../Executable/package.dhall
 
 let Flag = ../Flag/Type
 
@@ -27,36 +27,41 @@ let Github = ../Github/Type
 
 let Library = ../Library/Type
 
+let Sublibrary = ../Sublibrary/Type
+
 let Test = ../Test/package.dhall
 
+let DefaultType = ./DefaultType
+
 in  λ(rec : (Type → Type) → Type) →
-        Common.default (rec Common.Type)
-      ∧ { synopsis = None Text
-        , description = None Text
-        , category = None Text
-        , stability = None Text
-        , homepage = None Text
-        , bug-reports = None Text
-        , author = [] : List Text
-        , maintainer = [] : List Text
-        , copyright = [] : List Text
-        , license = None Text
-        , license-file = [] : List Text
-        , tested-with = [] : List Text
-        , build-type = None BuildType
-        , extra-source-files = [] : List Text
-        , extra-doc-files = [] : List Text
-        , data-files = [] : List Text
-        , data-dir = None Text
-        , github = None Text
-        , git = None Text
-        , custom-setup = None CustomSetup
-        , flags = [] : P.Map.Type Text Flag
-        , library = None (rec Library)
-        , internal-libraries = [] : P.Map.Type Text (rec Library)
-        , executables = [] : P.Map.Type Text (rec Executable)
-        , executable = None (rec Executable)
-        , tests = [] : P.Map.Type Text (rec Test.Type)
-        , benchmarks = [] : P.Map.Type Text (rec Benchmark.Type)
-        , defaults = [] : List Default
-        }
+          Common.default (rec Common.Type)
+        ∧ { synopsis = None Text
+          , description = None Text
+          , category = None Text
+          , stability = None Text
+          , homepage = None Text
+          , bug-reports = None Text
+          , author = [] : List Text
+          , maintainer = [] : List Text
+          , copyright = [] : List Text
+          , license = None Text
+          , license-file = [] : List Text
+          , tested-with = [] : List Text
+          , build-type = None BuildType
+          , extra-source-files = [] : List Text
+          , extra-doc-files = [] : List Text
+          , data-files = [] : List Text
+          , data-dir = None Text
+          , github = None Text
+          , git = None Text
+          , custom-setup = None CustomSetup
+          , flags = [] : P.Map.Type Text Flag
+          , library = None (rec Library)
+          , internal-libraries = [] : P.Map.Type Text (rec Sublibrary)
+          , executables = [] : P.Map.Type Text (rec Executable.Type)
+          , executable = None (rec Executable.Type)
+          , tests = [] : P.Map.Type Text (rec Test.Type)
+          , benchmarks = [] : P.Map.Type Text (rec Benchmark.Type)
+          , defaults = [] : List Default
+          }
+      : DefaultType rec

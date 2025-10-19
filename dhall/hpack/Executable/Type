@@ -1,8 +1,0 @@
-let Common = ../Common/Type
-
-in  λ(a : Type) →
-        Common a
-      ⩓ { main : Text
-        , other-modules : List Text
-        , generated-other-modules : List Text
-        }

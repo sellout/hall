@@ -1,0 +1,14 @@
+{-| I there’s a conflict, it applies the `combine` function, which can choose to
+    discard both values.
+-}
+let Combine = ./Type
+
+in  λ(a : Type) →
+    λ(combine : Combine a) →
+    λ(left : Optional a) →
+    λ(right : Optional a) →
+      merge
+        { None = right
+        , Some = λ(l : a) → merge { None = Some l, Some = combine l } right
+        }
+        left

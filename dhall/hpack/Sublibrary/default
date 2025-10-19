@@ -1,0 +1,8 @@
+let Library = ../Library/default
+
+let Visibility = ../Visibility/Type
+
+let DefaultType = ./DefaultType
+
+in  λ(a : Type) →
+      Library a ∧ { visibility = Visibility.private } : DefaultType a

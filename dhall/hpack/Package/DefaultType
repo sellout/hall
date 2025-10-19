@@ -1,19 +1,3 @@
-{-| The top-level type for hpack-dhall.
-
-    The `rec` parameter defines how components recurse (which occurs via
-    `Conditional`s). The general form would use something like Dada’s `Mu` type,
-    but that can be avoided if you’re willing to limit how deeply `Conditional`s
-    can nest. For example,
-
-  - `λ(f : Type → Type) → f <>` – no `Conditional`s are possible;
-  - `λ(f : Type → Type) → f (f <>)` – `Conditional`s are possible, but they
-  - can’t be nested;
-  - `λ(f : Type → Type) → f (f (f <>))` – `Conditional`s can be nested one level;
-  - etc.
-
-    Using the type functions instead of `Mu` also means you can avoid the
-    `embed` wrapper, which can help with clarity.
--}
 let P =
       https://prelude.dhall-lang.org/v20.1.0/package.dhall
         sha256:26b0ef498663d269e4dc6a82b0ee289ec565d683ef4c00d0ebdd25333a5a3c98
@@ -42,11 +26,7 @@ let Test = ../Test/package.dhall
 
 in  λ(rec : (Type → Type) → Type) →
         Common (rec Common)
-      ⩓ { name : Text
-        , -- This is optional in hpack, but not here, as it’s important the
-          -- number be explicit, even if it’s `"0.0.0".`
-          version : Text
-        , synopsis : Optional Text
+      ⩓ { synopsis : Optional Text
         , description : Optional Text
         , category : Optional Text
         , stability : Optional Text
@@ -55,15 +35,10 @@ in  λ(rec : (Type → Type) → Type) →
         , author : List Text
         , maintainer : List Text
         , copyright : List Text
-        , -- If this is empty when it gets to Cabal, it defaults to "NONE".
-          -- However, hpack will try to infer it from `license-file`.
-          license : Optional Text
+        , license : Optional Text
         , license-file : List Text
         , tested-with : List Text
-        , -- The defaulting rules for this are slightly complicated
-          -- (https://cabal.readthedocs.io/en/stable/cabal-package-description-file.html#pkg-field-build-type),
-          -- so we leave it to Cabal to figure out.
-          build-type : Optional BuildType
+        , build-type : Optional BuildType
         , extra-source-files : List Text
         , extra-doc-files : List Text
         , data-files : List Text

@@ -1,5 +1,0 @@
-let schema = λ(a : Type) → { Type = ./Type a, default = ./default a }
-
-let testMinimalRequiredFields = (schema <>)::{ main = "Main.hs" }
-
-in  schema

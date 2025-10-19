@@ -1,1 +1,5 @@
-{ Type = ./Type, ifGhcImpl = ./ifGhcImpl, maybe = ./maybe }
+{ Comparator = ./Comparator/package.dhall
+, Type = ./Type
+, ifGhcImpl = ./ifGhcImpl
+, maybe = ./maybe
+}

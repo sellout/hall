@@ -1,0 +1,5 @@
+let Common = ../Common/package.dhall
+
+let DefaultType = ./DefaultType
+
+in  λ(a : Type) → Common.default a ∧ {=} : DefaultType a

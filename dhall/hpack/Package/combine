@@ -1,0 +1,131 @@
+let BuildType = ../BuildType/Type
+
+let Combine = ../Combine/package.dhall
+
+let Common = ../Common/package.dhall
+
+let CustomSetup = ../CustomSetup/Type
+
+let Executable = ../Executable/package.dhall
+
+let Library = ../Library/Type
+
+let DefaultType = ./DefaultType
+
+let extractCommon = ./extractCommon
+
+in  λ(rec : (Type → Type) → Type) →
+    λ ( combine
+      : { buildable : Combine.Type Bool
+        , synopsis : Combine.Type Text
+        , description : Combine.Type Text
+        , category : Combine.Type Text
+        , stability : Combine.Type Text
+        , homepage : Combine.Type Text
+        , bug-reports : Combine.Type Text
+        , license : Combine.Type Text
+        , build-type : Combine.Type BuildType
+        , data-dir : Combine.Type Text
+        , github : Combine.Type Text
+        , git : Combine.Type Text
+        , custom-setup : Combine.Type CustomSetup
+        , library : Combine.Type (rec Library)
+        , executable : Combine.Type (rec Executable.Type)
+        }
+      ) →
+    λ(left : DefaultType rec) →
+    λ(right : DefaultType rec) →
+          Common.combine
+            (rec Common.Type)
+            combine.{ buildable }
+            (extractCommon rec left)
+            (extractCommon rec right)
+        ∧ { synopsis =
+              Combine.optional
+                Text
+                combine.synopsis
+                left.synopsis
+                right.synopsis
+          , description =
+              Combine.optional
+                Text
+                combine.description
+                left.description
+                right.description
+          , category =
+              Combine.optional
+                Text
+                combine.category
+                left.category
+                right.category
+          , stability =
+              Combine.optional
+                Text
+                combine.stability
+                left.stability
+                right.stability
+          , homepage =
+              Combine.optional
+                Text
+                combine.homepage
+                left.homepage
+                right.homepage
+          , bug-reports =
+              Combine.optional
+                Text
+                combine.bug-reports
+                left.bug-reports
+                right.bug-reports
+          , author = left.author # right.author
+          , maintainer = left.maintainer # right.maintainer
+          , copyright = left.copyright # right.copyright
+          , license =
+              Combine.optional Text combine.license left.license right.license
+          , license-file = left.license-file # right.license-file
+          , tested-with = left.tested-with # right.tested-with
+          , build-type =
+              Combine.optional
+                BuildType
+                combine.build-type
+                left.build-type
+                right.build-type
+          , extra-source-files =
+              left.extra-source-files # right.extra-source-files
+          , extra-doc-files = left.extra-doc-files # right.extra-doc-files
+          , data-files = left.data-files # right.data-files
+          , data-dir =
+              Combine.optional
+                Text
+                combine.data-dir
+                left.data-dir
+                right.data-dir
+          , github =
+              Combine.optional Text combine.github left.github right.github
+          , git = Combine.optional Text combine.git left.git right.git
+          , custom-setup =
+              Combine.optional
+                CustomSetup
+                combine.custom-setup
+                left.custom-setup
+                right.custom-setup
+          , flags = left.flags # right.flags
+          , library =
+              Combine.optional
+                (rec Library)
+                combine.library
+                left.library
+                right.library
+          , internal-libraries =
+              left.internal-libraries # right.internal-libraries
+          , executables = left.executables # right.executables
+          , executable =
+              Combine.optional
+                (rec Executable.Type)
+                combine.executable
+                left.executable
+                right.executable
+          , tests = left.tests # right.tests
+          , benchmarks = left.benchmarks # right.benchmarks
+          , defaults = left.defaults # right.defaults
+          }
+      : DefaultType rec

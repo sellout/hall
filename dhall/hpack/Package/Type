@@ -34,6 +34,8 @@ let Flag = ../Flag/Type
 
 let Library = ../Library/Type
 
+let Sublibrary = ../Sublibrary/Type
+
 let Test = ../Test/package.dhall
 
 in  λ(rec : (Type → Type) → Type) →
@@ -69,7 +71,7 @@ in  λ(rec : (Type → Type) → Type) →
         , custom-setup : Optional CustomSetup
         , flags : P.Map.Type Text Flag
         , library : Optional (rec Library)
-        , internal-libraries : P.Map.Type Text (rec Library)
+        , internal-libraries : P.Map.Type Text (rec Sublibrary)
         , executables : P.Map.Type Text (rec Executable.Type)
         , executable : Optional (rec Executable.Type)
         , tests : P.Map.Type Text (rec Test.Type)

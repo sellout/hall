@@ -1,0 +1,4 @@
+let Comparator = ./Type
+
+in  λ(c : Comparator) →
+      merge { EQ = "==", GE = ">=", GT = ">", LT = "<", LE = "<=" } c

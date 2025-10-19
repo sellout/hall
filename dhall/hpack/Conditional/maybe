@@ -1,20 +1,58 @@
-{-|
-Generates a conditional expression in Cabal _only_ if there the
-`minimumGhcVersion` is less than the version it’s conditinolazed on.
+{-| Conditionally generate a `Conditional`. If the `minimumGhcVersion` provided
+    makes one of the branches impossible, it will return the other branch.
+    Otherwise, it will return the conditional expression that should be added to
+    the Cabal file.
 
-__TODO__: If this doesn’t create the conditional, then the caller needs to
-          manually add the `body` to the containing section.
+__TODO__: We should be able to partition a list of these, so the `Static` can be
+          folded into a single value while the `Cond` can be provided to `when`
+          in hpack-dhall.
 -}
 let Pvp = ../../PVP/package.dhall
 
 let Conditional = ./Type
 
+let Comparator = ./Comparator/package.dhall
+
+let compare =
+      λ(x : Pvp.Version) →
+      λ(c : Comparator.Type) →
+      λ(y : Pvp.Version) →
+        merge
+          { EQ = Pvp.lessThanEqual x y && Pvp.lessThanEqual y x
+          , GE = Pvp.lessThanEqual y x
+          , GT = Pvp.lessThanEqual x y == False
+          , LT = Pvp.lessThanEqual y x == True
+          , LE = Pvp.lessThanEqual x y
+          }
+          c
+
+let Either = λ(a : Type) → < Left : a | Right : Conditional a >
+
 in  λ(a : Type) →
     λ(minimumGhcVersion : Pvp.Version) →
-    λ(comparator : Text) →
+    λ(comparator : Comparator.Type) →
     λ(ghcVersion : Pvp.Version) →
     λ(body : a) →
     λ(alt : a) →
-      if    Pvp.lessThanEqual ghcVersion minimumGhcVersion
-      then  [] : List (Conditional a)
-      else  [ ./ifGhcImpl a comparator ghcVersion body alt ]
+      let cmp =
+            λ(c : Comparator.Type) →
+            λ(single : a) →
+              if    compare minimumGhcVersion c ghcVersion
+              then  (Either a).Left single
+              else  (Either a).Right
+                      ( ./ifGhcImpl
+                          a
+                          (Comparator.show comparator)
+                          ghcVersion
+                          body
+                          alt
+                      )
+
+      in  merge
+            { EQ = cmp Comparator.Type.GT alt
+            , GE = cmp Comparator.Type.GE body
+            , GT = cmp Comparator.Type.GT body
+            , LT = cmp Comparator.Type.GE alt
+            , LE = cmp Comparator.Type.GT alt
+            }
+            comparator

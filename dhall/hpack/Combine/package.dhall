@@ -1,1 +1,5 @@
-{ Type = ./Type, optional = ./optional }
+{ Type = ./Type
+, discardConflict = ./discardConflict
+, nonDefaultExpose = ./nonDefaultExpose
+, optional = ./optional
+}

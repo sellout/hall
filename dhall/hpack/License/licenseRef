@@ -1,0 +1,9 @@
+let Idstring = ./Idstring
+
+let documentRef = ./documentRef
+
+let LicenseRef = Text
+
+in  λ(document : Optional Idstring) →
+    λ(license : Idstring) →
+      documentRef document ++ "LicenseRef-" ++ license : LicenseRef

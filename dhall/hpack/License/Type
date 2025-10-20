@@ -1,0 +1,8 @@
+{-| An SPDX license, represented in a type that allows logical processing while
+    still serializing to a value that Cabal understands.
+-}
+let CompoundExpression = Text
+
+let DeclaredLicense = ./Declared
+
+in  DeclaredLicense CompoundExpression

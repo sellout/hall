@@ -1,0 +1,3 @@
+{-| If both values are provided, discard them.
+-}
+λ(a : Type) → λ(_ : a) → λ(_ : a) → None a

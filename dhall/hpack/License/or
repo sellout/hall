@@ -1,0 +1,51 @@
+let P =
+      https://prelude.dhall-lang.org/v20.1.0/package.dhall
+        sha256:26b0ef498663d269e4dc6a82b0ee289ec565d683ef4c00d0ebdd25333a5a3c98
+
+let License = ./Type
+
+let conjoin = ./conjoin
+
+let or =
+      λ(licenses : List (Optional License)) →
+          conjoin
+            "OR"
+            (λ(x : Text) → x)
+            ( List/fold
+                (Optional License)
+                licenses
+                (List Text)
+                ( λ(head : Optional License) →
+                  λ(tail : List Text) →
+                    merge
+                      { None = tail
+                      , Some =
+                          λ(h : License) →
+                            merge
+                              { NONE = tail
+                              , Expression =
+                                  λ(license : Text) → [ license ] # tail
+                              }
+                              h
+                      }
+                      head
+                )
+                ([] : List Text)
+            )
+        : Optional License
+
+let license-id = ./id
+
+let checkEmptyOr = assert : or ([] : List (Optional License)) ≡ None License
+
+let checkOr =
+        assert
+      :   or [ license-id "AGPL-3.0-or-later", license-id "CC-BY-ND-4.0" ]
+        ≡ Some (License.Expression "AGPL-3.0-or-later OR CC-BY-ND-4.0")
+
+let checkOrNone =
+        assert
+      :   or [ Some License.NONE, license-id "included" ]
+        ≡ Some (License.Expression "included")
+
+in  or

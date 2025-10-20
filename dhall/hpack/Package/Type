@@ -36,6 +36,8 @@ let Github = ../Github/Type
 
 let Library = ../Library/Type
 
+let License = ../License/Type
+
 let Sublibrary = ../Sublibrary/Type
 
 let Test = ../Test/package.dhall
@@ -55,9 +57,18 @@ in  λ(rec : (Type → Type) → Type) →
         , author : List Text
         , maintainer : List Text
         , copyright : List Text
-        , -- If this is empty when it gets to Cabal, it defaults to "NONE".
-          -- However, hpack will try to infer it from `license-file`.
-          license : Optional Text
+        , -- The defaulting here is a bit complicated, but this preserves it in
+          -- order to support hpack’s inference from `license-file`. If this is
+          -- None, hpack will try to infer a value from `license-file`. If it
+          -- can’t Cabal will default it to “NONE” (which I think should
+          -- actually be “NoAssertion”). The `License` type is defined to
+          -- support some reduction while still producing a value that is
+          -- understood by Cabal.
+          --
+          -- The oddity is that a `None License` operates as “NoAssertion” as
+          -- far as this library is concerned, but if it’s `None License` when
+          -- this is converted to Cabal, it’s treated as “NONE”.
+          license : Optional License
         , license-file : List Text
         , tested-with : List Text
         , -- The defaulting rules for this are slightly complicated

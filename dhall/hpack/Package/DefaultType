@@ -20,6 +20,8 @@ let Github = ../Github/Type
 
 let Library = ../Library/Type
 
+let License = ../License/Type
+
 let Sublibrary = ../Sublibrary/Type
 
 let Test = ../Test/package.dhall
@@ -35,7 +37,7 @@ in  λ(rec : (Type → Type) → Type) →
         , author : List Text
         , maintainer : List Text
         , copyright : List Text
-        , license : Optional Text
+        , license : Optional License
         , license-file : List Text
         , tested-with : List Text
         , build-type : Optional BuildType

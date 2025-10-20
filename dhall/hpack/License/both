@@ -1,0 +1,7 @@
+{-| `or` with exactly two arguments, for use as a combiner.
+-}
+let License = ./Type
+
+let and = ./and
+
+in  λ(left : License) → λ(right : License) → and [ Some left, Some right ]

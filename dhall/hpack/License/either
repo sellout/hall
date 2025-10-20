@@ -1,0 +1,9 @@
+{-| `or` with exactly two arguments, for use as a combiner.
+-}
+let License = ./Type
+
+let or = ./or
+
+in  λ(left : License) →
+    λ(right : License) →
+      or [ Some left, Some right ] : Optional License

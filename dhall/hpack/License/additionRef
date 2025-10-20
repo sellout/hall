@@ -1,0 +1,9 @@
+let Idstring = ./Idstring
+
+let AdditionRef = Text
+
+let documentRef = ./documentRef
+
+in  λ(document : Optional Idstring) →
+    λ(addition : Idstring) →
+      documentRef document ++ "AdditionRef-" ++ addition : AdditionRef

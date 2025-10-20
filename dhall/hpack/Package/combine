@@ -10,6 +10,8 @@ let Executable = ../Executable/package.dhall
 
 let Library = ../Library/Type
 
+let License = ../License/Type
+
 let DefaultType = ./DefaultType
 
 let extractCommon = ./extractCommon
@@ -23,7 +25,7 @@ in  λ(rec : (Type → Type) → Type) →
         , stability : Combine.Type Text
         , homepage : Combine.Type Text
         , bug-reports : Combine.Type Text
-        , license : Combine.Type Text
+        , license : Combine.Type License
         , build-type : Combine.Type BuildType
         , data-dir : Combine.Type Text
         , github : Combine.Type Text
@@ -80,7 +82,11 @@ in  λ(rec : (Type → Type) → Type) →
           , maintainer = left.maintainer # right.maintainer
           , copyright = left.copyright # right.copyright
           , license =
-              Combine.optional Text combine.license left.license right.license
+              Combine.optional
+                License
+                combine.license
+                left.license
+                right.license
           , license-file = left.license-file # right.license-file
           , tested-with = left.tested-with # right.tested-with
           , build-type =

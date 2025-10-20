@@ -1,0 +1,79 @@
+{-| Combine a list of licenses into a single conjunction.
+
+- `NOASSERTION` will be dropped
+- `NONE` will cause everything else to be dropped
+- `Expression`s will be joined with “AND” (the arguments to “AND” will be
+  parenthesized no matter what, because we can’t inspect the `Text` to identify
+  if it contains an “OR” at the top level)
+-}
+let P =
+      https://prelude.dhall-lang.org/v20.1.0/package.dhall
+        sha256:26b0ef498663d269e4dc6a82b0ee289ec565d683ef4c00d0ebdd25333a5a3c98
+
+let License = ./Type
+
+let conjoin = ./conjoin
+
+let and =
+      λ(licenses : List (Optional License)) →
+        merge
+          { None = Some License.NONE
+          , Some = conjoin "AND" (λ(x : Text) → "(" ++ x ++ ")")
+          }
+          ( List/fold
+              (Optional License)
+              licenses
+              (Optional (List Text))
+              ( λ(head : Optional License) →
+                λ(tail : Optional (List Text)) →
+                  merge
+                    { None = tail
+                    , Some =
+                        λ(h : License) →
+                          merge
+                            { NONE = None (List Text)
+                            , Expression =
+                                λ(license : Text) →
+                                  P.Optional.map
+                                    (List Text)
+                                    (List Text)
+                                    (λ(prevs : List Text) → [ license ] # prevs)
+                                    tail
+                            }
+                            h
+                    }
+                    head
+              )
+              (Some ([] : List Text))
+          )
+        : Optional License
+
+let license-id = ./id
+
+let or = ./or
+
+let checkAnd =
+        assert
+      :   and [ license-id "first", license-id "second", license-id "third" ]
+        ≡ Some (License.Expression "(first) AND (second) AND (third)")
+
+let checkEmptyAnd = assert : and ([] : List (Optional License)) ≡ None License
+
+let checkAndNone =
+        assert
+      :   and [ Some License.NONE, license-id "getting-skipped" ]
+        ≡ Some License.NONE
+
+let checkNested =
+        assert
+      :   or
+            [ and
+                [ or [ license-id "this", license-id "that" ]
+                , license-id "intersected"
+                ]
+            , license-id "unioned"
+            ]
+        ≡ Some
+            (License.Expression "(this OR that) AND (intersected) OR unioned")
+
+in  and

@@ -1,0 +1,6 @@
+let Idstring = ./Idstring
+
+in  λ(document : Optional Idstring) →
+      merge
+        { None = "", Some = λ(doc : Idstring) → "DocumentRef-" ++ doc ++ ":" }
+        document

@@ -1,0 +1,10 @@
+let SimpleExpression = Text
+
+let AdditionExpression = Text
+
+let License = ./Type
+
+in  λ(license : SimpleExpression) →
+    λ(addition : AdditionExpression) →
+        Some (License.Expression (license ++ " WITH " ++ addition))
+      : Optional License

@@ -1,0 +1,8 @@
+{-| An SPDX license, represented in a type that allows logical processing while
+    still serializing to a value that Cabal understands.
+
+NB: Cabal doesn’t support the “NOASSERTION” case, so licenses are handled as
+    `Optional License`, with `None` (not to be confused with `NONE`)
+    representing “NOASSERTION” in the boolean logic.
+-}
+λ(compound-expression : Type) → < NONE | Expression : compound-expression >

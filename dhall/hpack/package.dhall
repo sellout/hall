@@ -38,6 +38,7 @@ Many of these have a similar structure:
 , Flag = ./Flag/package.dhall
 , Github = ./Github/package.dhall
 , Library = ./Library/package.dhall
+, License = ./License/package.dhall
 , Package = ./Package/package.dhall
 , Sublibrary = ./Sublibrary/package.dhall
 , Test = ./Test/package.dhall

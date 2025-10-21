@@ -1,1 +1,1 @@
-{ Type = ./Type }
+{ Structure = ./Structure, Type = ./Type }

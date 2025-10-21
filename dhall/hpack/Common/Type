@@ -6,7 +6,7 @@ let Conditional = ../Conditional/Type
 
 let Dependencies = ../Dependencies/Type
 
-let Verbatim = ../Verbatim/Type
+let Verbatim = ../Verbatim/package.dhall
 
 in  λ(a : Type) →
       { buildable : Optional Bool
@@ -40,5 +40,5 @@ in  λ(a : Type) →
         --     all the same places as other `Common` fields), when provided at
         --     the top-level it applies _to_ the top-level, not propagated
         --     across each section like other `Common` fields are.
-        verbatim : P.Map.Type Text Verbatim
+        verbatim : List Verbatim.Structure
       }

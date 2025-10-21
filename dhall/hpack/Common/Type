@@ -1,12 +1,8 @@
-let P =
-      https://prelude.dhall-lang.org/v20.1.0/package.dhall
-        sha256:26b0ef498663d269e4dc6a82b0ee289ec565d683ef4c00d0ebdd25333a5a3c98
-
 let Conditional = ../Conditional/Type
 
 let Dependencies = ../Dependencies/Type
 
-let Verbatim = ../Verbatim/Type
+let Verbatim = ../Verbatim/package.dhall
 
 in  λ(a : Type) →
       { buildable : Optional Bool
@@ -40,5 +36,5 @@ in  λ(a : Type) →
         --     all the same places as other `Common` fields), when provided at
         --     the top-level it applies _to_ the top-level, not propagated
         --     across each section like other `Common` fields are.
-        verbatim : P.Map.Type Text Verbatim
+        verbatim : List Verbatim.Structure
       }

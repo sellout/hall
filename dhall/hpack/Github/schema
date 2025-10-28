@@ -1,8 +1,0 @@
-let schema = { Type = ./Type, default = ./default }
-
-let testMinimalRequiredFields =
-        assert
-      :   schema::{ owner = "sellout", repo = "hall" }
-        ≡ schema.default ∧ { owner = "sellout", repo = "hall" }
-
-in  schema

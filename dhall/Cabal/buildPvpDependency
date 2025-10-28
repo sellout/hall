@@ -13,24 +13,26 @@ in  λ(name : Text) →
         { name
         , version =
             if    P.List.null Pvp.Version versions
-            then  ""
-            else      "^>= {"
-                  ++  ( List/fold
-                          Pvp.Version
-                          versions
-                          { comma : Bool, res : Text }
-                          ( λ(v : Pvp.Version) →
-                            λ(acc : { comma : Bool, res : Text }) →
-                              { comma = True
-                              , res =
-                                      Pvp.show v
-                                  ++  (if acc.comma then ", " else "")
-                                  ++  acc.res
-                              }
-                          )
-                          { comma = False, res = "" }
-                      ).res
-                  ++  "}"
+            then  None Text
+            else  Some
+                    (     "^>= {"
+                      ++  ( List/fold
+                              Pvp.Version
+                              versions
+                              { comma : Bool, res : Text }
+                              ( λ(v : Pvp.Version) →
+                                λ(acc : { comma : Bool, res : Text }) →
+                                  { comma = True
+                                  , res =
+                                          Pvp.show v
+                                      ++  (if acc.comma then ", " else "")
+                                      ++  acc.res
+                                  }
+                              )
+                              { comma = False, res = "" }
+                          ).res
+                      ++  "}"
+                    )
         , mixin = [] : List Text
         }
       : Dependency

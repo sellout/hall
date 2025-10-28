@@ -1,1 +1,5 @@
-{ Type = ./Type, default = ./default, schema = ./schema }
+let package = { Type = ./Type, default = ./default }
+
+let testMinimalRequiredFieldsForSchema = package::{ name = "base" }
+
+in  package

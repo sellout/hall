@@ -1,5 +1,0 @@
-let schema = { Type = ./Type, default = ./default }
-
-let testMinimalRequiredFields = schema::{ name = "base" }
-
-in  schema

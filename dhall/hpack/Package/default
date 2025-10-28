@@ -57,13 +57,13 @@ in  λ(rec : (Type → Type) → Type) →
           , github = None Text
           , git = None Text
           , custom-setup = None CustomSetup
-          , flags = [] : P.Map.Type Text Flag
+          , flags = P.Map.empty Text Flag
           , library = None (rec Library)
-          , internal-libraries = [] : P.Map.Type Text (rec Sublibrary)
-          , executables = [] : P.Map.Type Text (rec Executable.Type)
+          , internal-libraries = P.Map.empty Text (rec Sublibrary)
+          , executables = P.Map.empty Text (rec Executable.Type)
           , executable = None (rec Executable.Type)
-          , tests = [] : P.Map.Type Text (rec Test.Type)
-          , benchmarks = [] : P.Map.Type Text (rec Benchmark.Type)
+          , tests = P.Map.empty Text (rec Test.Type)
+          , benchmarks = P.Map.empty Text (rec Benchmark.Type)
           , defaults = [] : List Default
           }
       : DefaultType rec

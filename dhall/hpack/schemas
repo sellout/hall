@@ -1,0 +1,12 @@
+{-| A consistent set of schemas for the provided `rec` type.
+
+NB: Benchmarks, executables, and tests all have the same type, so `Binary` is
+    the shared form.
+-}
+λ(rec : (Type → Type) → Type) →
+  { Binary = ./Binary/schema (rec ./Binary/Type)
+  , Common = ./Common/schema (rec ./Common/Type)
+  , Library = ./Library/schema (rec ./Library/Type)
+  , Package = ./Package/schema rec
+  , Sublibrary = ./Sublibrary/schema (rec ./Sublibrary/Type)
+  }

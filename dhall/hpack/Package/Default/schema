@@ -1,0 +1,16 @@
+{-| A schema for the `Package` type.
+
+    See ./Type for an explanation of the `rec` parameter.
+-}
+let Self = ./Type
+
+let default = ./default
+
+let schema =
+      λ(rec : (Type → Type) → Type) →
+          { Type = Self rec, default = default rec }
+        : { Type : Type, default : Self rec }
+
+let testMinimalRequiredFields = (schema (λ(_ : Type → Type) → <>))::{=}
+
+in  schema

@@ -9,31 +9,31 @@ let P =
       https://prelude.dhall-lang.org/v20.1.0/package.dhall
         sha256:26b0ef498663d269e4dc6a82b0ee289ec565d683ef4c00d0ebdd25333a5a3c98
 
-let Benchmark = ../Benchmark/package.dhall
+let Benchmark = ../../Benchmark/package.dhall
 
-let BuildType = ../BuildType/Type
+let BuildType = ../../BuildType/Type
 
-let Common = ../Common/package.dhall
+let Common = ../../Common/package.dhall
 
-let CustomSetup = ../CustomSetup/Type
+let CustomSetup = ../../CustomSetup/Type
 
-let Default = ../Default/Type
+let Default = ../../Default/Type
 
-let Executable = ../Executable/package.dhall
+let Executable = ../../Executable/package.dhall
 
-let Flag = ../Flag/Type
+let Flag = ../../Flag/Type
 
-let Github = ../Github/Type
+let Github = ../../Github/Type
 
-let Library = ../Library/Type
+let Library = ../../Library/Type
 
-let License = ../License/Type
+let License = ../../License/Type
 
-let Sublibrary = ../Sublibrary/Type
+let Sublibrary = ../../Sublibrary/Type
 
-let Test = ../Test/package.dhall
+let Test = ../../Test/package.dhall
 
-let DefaultType = ./DefaultType
+let Self = ./Type
 
 in  λ(rec : (Type → Type) → Type) →
           Common.default (rec Common.Type)
@@ -66,4 +66,4 @@ in  λ(rec : (Type → Type) → Type) →
           , benchmarks = P.Map.empty Text (rec Benchmark.Type)
           , defaults = [] : List Default
           }
-      : DefaultType rec
+      : Self rec

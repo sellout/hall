@@ -2,16 +2,14 @@
 
     See ./Type for an explanation of the `rec` parameter.
 -}
-let DefaultType = ./DefaultType
+let Default = ./Default/package.dhall
 
 let Self = ./Type
 
-let default = ./default
-
 let schema =
       λ(rec : (Type → Type) → Type) →
-          { Type = Self rec, default = default rec }
-        : { Type : Type, default : DefaultType rec }
+          { Type = Self rec, default = Default.default rec }
+        : { Type : Type, default : Default.Type rec }
 
 let testMinimalRequiredFields =
       (schema (λ(_ : Type → Type) → <>))::{ name = "test", version = "0.0.0" }

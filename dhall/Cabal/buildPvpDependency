@@ -24,7 +24,7 @@ in  λ(name : Text) →
                                 λ(acc : { comma : Bool, res : Text }) →
                                   { comma = True
                                   , res =
-                                          Pvp.show v
+                                          Pvp.showLax v
                                       ++  (if acc.comma then ", " else "")
                                       ++  acc.res
                                   }

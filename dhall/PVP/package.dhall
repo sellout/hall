@@ -1,1 +1,6 @@
-{ Version = ./Version, lessThanEqual = ./lessThanEqual, show = ./show, v = ./v }
+{ Version = ./Version
+, lessThanEqual = ./lessThanEqual
+, show = ./show
+, showLax = ./showLax
+, v = ./v
+}

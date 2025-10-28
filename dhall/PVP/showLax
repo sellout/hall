@@ -1,0 +1,12 @@
+{-| Shows a lax version of the bounds – PVP requires at least three components,
+    but this drops the 2nd & 3rd if they’re zero, allowing catching short
+    versions in bounds.
+-}
+λ(x : ./Version) →
+      Natural/show x.major.a
+  ++  ( if    Natural/isZero x.minor
+        then  if    Natural/isZero x.major.b
+              then  ""
+              else  "." ++ Natural/show x.major.b
+        else  "." ++ Natural/show x.major.b ++ "." ++ Natural/show x.minor
+      )

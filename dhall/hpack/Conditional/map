@@ -1,0 +1,7 @@
+let Self = ./Type
+
+in  λ(a : Type) →
+    λ(b : Type) →
+    λ(f : a → b) →
+    λ(self : Self a) →
+      self.{ condition } ∧ { `then` = f self.`then`, `else` = f self.`else` }

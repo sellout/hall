@@ -12,7 +12,7 @@ let Library = ../Library/Type
 
 let License = ../License/Type
 
-let DefaultType = ./DefaultType
+let DefaultType = ./Default/Type
 
 let extractCommon = ./extractCommon
 

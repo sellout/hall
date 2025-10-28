@@ -1,6 +1,5 @@
-{ DefaultType = ./DefaultType
+{ Default = ./Default/package.dhall
 , Type = ./Type
 , combine = ./combine
-, default = ./default
 , schema = ./schema
 }

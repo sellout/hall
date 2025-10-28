@@ -8,31 +8,15 @@ let Pvp = ../PVP/package.dhall
 
 let Dependency = ../hpack/Dependency/Type
 
+let buildVersionRange = ./buildVersionRange
+
 in  λ(name : Text) →
     λ(versions : List Pvp.Version) →
         { name
         , version =
             if    P.List.null Pvp.Version versions
             then  None Text
-            else  Some
-                    (     "^>= {"
-                      ++  ( List/fold
-                              Pvp.Version
-                              versions
-                              { comma : Bool, res : Text }
-                              ( λ(v : Pvp.Version) →
-                                λ(acc : { comma : Bool, res : Text }) →
-                                  { comma = True
-                                  , res =
-                                          Pvp.showLax v
-                                      ++  (if acc.comma then ", " else "")
-                                      ++  acc.res
-                                  }
-                              )
-                              { comma = False, res = "" }
-                          ).res
-                      ++  "}"
-                    )
+            else  Some (buildVersionRange versions)
         , mixin = [] : List Text
         }
       : Dependency

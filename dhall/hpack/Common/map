@@ -1,0 +1,44 @@
+let P =
+      https://prelude.dhall-lang.org/v20.1.0/package.dhall
+        sha256:26b0ef498663d269e4dc6a82b0ee289ec565d683ef4c00d0ebdd25333a5a3c98
+
+let Conditional = ../Conditional/package.dhall
+
+let Self = ./Type
+
+in  λ(a : Type) →
+    λ(b : Type) →
+    λ(f : a → b) →
+    λ(self : Self a) →
+        self.{ buildable
+             , source-dirs
+             , default-extensions
+             , other-extensions
+             , ghc-options
+             , ghc-prof-options
+             , ghcjs-options
+             , cpp-options
+             , cc-options
+             , c-sources
+             , cxx-options
+             , cxx-sources
+             , js-sources
+             , extra-lib-dirs
+             , extra-libraries
+             , include-dirs
+             , frameworks
+             , extra-frameworks-dirs
+             , ld-options
+             , dependencies
+             , pkg-config-dependencies
+             , build-tools
+             , system-build-tools
+             , verbatim
+             }
+      ∧ { when =
+            P.List.map
+              (Conditional.Type a)
+              (Conditional.Type b)
+              (Conditional.map a b f)
+              self.when
+        }

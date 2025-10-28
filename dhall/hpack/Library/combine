@@ -18,11 +18,14 @@ in  λ(a : Type) →
             (extractCommon a left)
             (extractCommon a right)
         ∧ { exposed = combine.exposed left.exposed right.exposed
-          , exposed-modules = left.other-modules # right.other-modules
-          , generated-exposed-modules = left.other-modules # right.other-modules
+          , exposed-modules = left.exposed-modules # right.exposed-modules
+          , generated-exposed-modules =
+              left.generated-exposed-modules # right.generated-exposed-modules
           , other-modules = left.other-modules # right.other-modules
-          , generated-other-modules = left.other-modules # right.other-modules
-          , reexported-modules = left.other-modules # right.other-modules
-          , signatures = left.other-modules # right.other-modules
+          , generated-other-modules =
+              left.generated-other-modules # right.generated-other-modules
+          , reexported-modules =
+              left.reexported-modules # right.reexported-modules
+          , signatures = left.signatures # right.signatures
           }
       : DefaultType a

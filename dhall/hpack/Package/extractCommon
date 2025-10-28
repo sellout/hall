@@ -1,6 +1,6 @@
 let DefaultCommon = ../Common/DefaultType
 
-let DefaultType = ./DefaultType
+let DefaultType = ./Default/Type
 
 in  λ(rec : (Type → Type) → Type) →
     λ(self : DefaultType rec) →

@@ -44,4 +44,5 @@ Many of these have a similar structure:
 , Test = ./Test/package.dhall
 , Verbatim = ./Verbatim/package.dhall
 , Visibility = ./Visibility/package.dhall
+, schemas = ./schemas
 }

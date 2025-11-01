@@ -21,7 +21,6 @@ in  λ(rec : (Type → Type) → Type) →
       : { buildable : Combine.Type Bool
         , synopsis : Combine.Type Text
         , description : Combine.Type Text
-        , category : Combine.Type Text
         , stability : Combine.Type Text
         , homepage : Combine.Type Text
         , bug-reports : Combine.Type Text
@@ -54,12 +53,7 @@ in  λ(rec : (Type → Type) → Type) →
                 combine.description
                 left.description
                 right.description
-          , category =
-              Combine.optional
-                Text
-                combine.category
-                left.category
-                right.category
+          , category = left.category # right.category
           , stability =
               Combine.optional
                 Text

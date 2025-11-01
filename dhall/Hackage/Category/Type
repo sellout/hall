@@ -1,0 +1,525 @@
+{-| An enumeration of all the Hackage categories with at least two appearances.
+
+Any category not listed here can still be used via the `Other` constructor.
+
+This is designed so that `List ./Type` will serialize properly to use as the
+category field in hpack-dhall once sol/hpack#625 is available.
+
+NB: Some similar ones have been de-duplicated, with one alternative selected, in
+    order to try to standardize on one name going forward.
+-}
+< `.NET`
+| Accelerate
+| Accessibility
+| ACME
+| Actors
+| Adjunctions
+| ADSB
+| Aerospace
+| Aeson
+| AI
+| Algebra
+| Algorithm
+| `Algorithm Visualization`
+| Algorithms
+| Animation
+| API
+| Apple
+| Application
+| `Application Server`
+| Applicative
+| Archive
+| Argumentation
+| Array
+| Arrows
+| `Aspect Oriented Programming`
+| Astronomy
+| ATS
+| Attoparsec
+| Audio
+| Authentication
+| Automation
+| Avers
+| Aviation
+| AWS
+| Backup
+| Benchmarking
+| `Big Data`
+| Binary
+| Bindings
+| Bio
+| Bioinformatics
+| `Bit Vectors`
+| Bitcoin
+| Bits
+| Blockchain
+| Browser
+| BSD3
+| Build
+| `Build Tool`
+| Builders
+| Building
+| Bundle
+| Business
+| ByteStrings
+| C
+| Cabal
+| Caching
+| Cardano
+| Categories
+| Charts
+| Chat
+| Chemistry
+| CI
+| Classification
+| Clckwrks
+| CLI
+| `CLI Tool`
+| Client
+| Cloud
+| `Cloud Haskell`
+| CLR
+| Clustering
+| `Code Generation`
+| Codecs
+| Combinatorics
+| Combinators
+| `Command Line`
+| `Command Line Tools`
+| Commercial
+| Comonads
+| Compatibility
+| Compilers
+| `Compiler Plugin`
+| Composite
+| Composition
+| Compression
+| `Computational Geometry`
+| Concurrency
+| Conduit
+| Configuration
+| Console
+| Constraints
+| Containers
+| Contracts
+| Contravariant
+| Control
+| Conversions
+| Criu
+| Cryptography
+| CSV
+| CustomSetup
+| Data
+| `Data Control`
+| `Data Flow`
+| `Data Mining`
+| `Data Science`
+| `Data Structures`
+| Databases
+| Dataflow
+| Datamining
+| Date
+| Debian
+| Debugging
+| `Deep Learning`
+| Default
+| DeltaQ
+| Demo
+| `Dependency Injection`
+| `Dependent Types`
+| Desktop
+| `Desktop Environment`
+| Development
+| DevOps
+| Dhall
+| Diagnostics
+| Diagram
+| Digest
+| Directory
+| Disassembler
+| `Distributed Computing`
+| `Distributed Systems`
+| Distribution
+| DNS
+| Docker
+| Documentation
+| `Download Manager`
+| `Domain Specific Language`
+| Eden
+| Editor
+| Education
+| Educational
+| Effects
+| Elm
+| Email
+| Embedded
+| Enumerator
+| Environment
+| `Error Handling`
+| Ethereum
+| Eventsourcing
+| Example
+| Exceptions
+| Executable
+| Experimental
+| Extension
+| Factual
+| Failure
+| Fake
+| FakeData
+| Fay
+| Fedora
+| FFI
+| `FFI Tools`
+| File
+| `File Manager`
+| FilePath
+| Filesystem
+| Filter
+| Finance
+| Financial
+| Flatpak
+| Font
+| Foreign
+| `Foreign Binding`
+| `Formal Languages`
+| `Formal Methods`
+| Format
+| Formatting
+| Foundation
+| Framework
+| FRP
+| Functions
+| Functors
+| Futhark
+| `Game Engine`
+| Games
+| Gemini
+| Genealogy
+| General
+| Generics
+| Geo
+| Geography
+| Geometry
+| GHC
+| Git
+| GitHub
+| GiveYouAHead
+| Google
+| GPU
+| Graphics
+| GraphQL
+| Graphs
+| Groups
+| GRPC
+| GUI
+| Hakyll
+| HAM
+| Happstack
+| Hardware
+| Hash
+| Haskell
+| `Haskell Admin`
+| Haskell2010
+| Haskell98
+| Hasql
+| Health
+| Help
+| Heuristics
+| Hie
+| HKD
+| HLS
+| Hspec
+| HTML
+| HTTP
+| I18n
+| I2C
+| IDE
+| IDL
+| IHP
+| `Image Processing`
+| `Image Viewer`
+| Images
+| Integration
+| Interaction
+| Interfaces
+| Interpolation
+| Interpreters
+| IO
+| IO-Streams
+| IRC
+| `IRC Client`
+| Java
+| JavaScript
+| JSON
+| JVM
+| LambdaCalculus
+| Languages
+| LaTeX
+| Lenses
+| Lexing
+| Library
+| Lightning
+| `Linear Algebra`
+| Linguistics
+| Linnet
+| Linux
+| List
+| `Live Coding`
+| `Local Search`
+| Logging
+| Logic
+| `Logic Programming`
+| `Machine Learning`
+| `Machine Vision`
+| Machines
+| Mail
+| Manatee
+| MapReduce
+| Markdown
+| Mathematics
+| Media
+| Medical
+| Memoization
+| Memory
+| `Message-Oriented Middleware`
+| Metrics
+| Microcontroller
+| Middleware
+| Minecraft
+| Miso
+| Mobile
+| Model
+| `Monadic Regions`
+| Monads
+| Money
+| Monitoring
+| Mptcp
+| Multimedia
+| `Multimedia Player`
+| Music
+| `Mutable State`
+| N2O
+| `Natural Language`
+| `Natural Language Processing`
+| Neovim
+| Net
+| Network
+| `Network APIs`
+| Networking
+| Nix
+| Noise
+| Non-determinism
+| `Number Theory`
+| Numbers
+| Numerical
+| Numerics
+| OAuth
+| Observability
+| OCaml
+| OpenAPI
+| Opengl
+| OpenTelemetry
+| `Operating System`
+| Optics
+| Optimization
+| Options
+| Oracle
+| `Package Management`
+| Packaging
+| Pandoc
+| Parallel
+| Parallelism
+| Parser
+| `Parser Combinators`
+| Parsing
+| Password
+| Pattern
+| `Pattern Classification`
+| Payments
+| PDF
+| Performance
+| Persistent
+| `Phantom Types`
+| Physics
+| Pipes
+| Plotting
+| Plugins
+| Poker
+| Politic
+| Polymorphism
+| Polysemy
+| Possehl-Analytics
+| PostgreSQL
+| Potoki
+| Prelude
+| Preprocessor
+| Pretty-printing
+| Primitive
+| Probability
+| Productivity
+| Profiling
+| Profunctors
+| Program
+| `Program Transformation`
+| Project
+| `Project Management`
+| Protocols
+| Ptr
+| Pugs
+| Pup-Events
+| PureScript
+| QR
+| Quantum
+| QuasiQuotes
+| QuickCheck
+| Quipper
+| Qux
+| Radio
+| Random
+| Raspberrypi
+| Raw
+| RDF
+| Reactive
+| Reactivity
+| Records
+| Recursion
+| Redis
+| Refactoring
+| Reflection
+| Reflex
+| Regex
+| `Remote Management`
+| REPL
+| Resources
+| `Reverse Engineering`
+| Rewriting
+| Robotics
+| RPC
+| RSS
+| Saas
+| Safe
+| `Sample Code`
+| Scheduling
+| Schema
+| Science
+| `Scientific Simulation`
+| Scotty
+| Scripting
+| Search
+| Security
+| Selenium
+| `Semantic Web`
+| Serialization
+| Servant
+| Server
+| Services
+| Setup
+| Shake
+| Shell
+| SIMD
+| Simple
+| Simulation
+| Singletons
+| SMT
+| Snap
+| Software
+| `Software Defined Radio`
+| Sorting
+| Sound
+| `Source Code Analysis`
+| `Source Tools`
+| Spam
+| SpreadSheet
+| SQL
+| SQLite
+| `State Machines`
+| `Static Analysis`
+| `Statistical Modeling`
+| Statistics
+| STM
+| STM32
+| Stomp
+| Stratux
+| Streaming
+| Streamly
+| String
+| Structures
+| `Succinct Data Structures`
+| Svg
+| Swagger
+| `Symbolic Computation`
+| Syntax
+| SYstem
+| `System Tools`
+| Tar
+| Task
+| Teaching
+| Telemetry
+| Template
+| `Template Haskell`
+| Templating
+| Tensors
+| Terminal
+| Test
+| Testing
+| Text
+| TH
+| `Theorem Proving`
+| These
+| Thrift
+| Time
+| Timeout
+| TODO
+| TOML
+| Tonatona
+| Tooling
+| Tools
+| Trace
+| Tracing
+| Transformation
+| Tree
+| Tree-sitter
+| TUI
+| `Type Systems`
+| Types
+| TypeScript
+| Typography
+| UI
+| Unicode
+| Unification
+| Uniform
+| Unsafe
+| Ur/Web
+| Urbit
+| URI
+| `User Interfaces`
+| Utilities
+| UUID
+| Validation
+| Validity
+| Value
+| Vector
+| Video
+| Vinyl
+| `Visual Programming`
+| Visualization
+| Vulkan
+| Wai
+| Web
+| `Web Scraping`
+| WebAssembly
+| WebDriver
+| `Web Framework`
+| Workflow
+| X11
+| XML
+| XMonad
+| YAML
+| Yesod
+| Yi
+| Zift
+| Zip
+| Zippers
+| Other : Text
+>

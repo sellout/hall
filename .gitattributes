@@ -1,4 +1,3 @@
-/dhall/** linguist-language=Dhall
 /.cache/git/config linguist-generated
 /.cache/git/hooks/pre-push linguist-generated
 /.cache/vale/Vocab/hall/accept.txt linguist-generated
@@ -9,10 +8,11 @@
 /.gitattributes linguist-generated
 /.github/renovate.json linguist-generated
 /.github/settings.yml linguist-generated
-/.gitignore linguist-generated
-/.vale.ini linguist-generated
 /.github/workflows/flakehub-publish.yml linguist-generated
-/garnix.yaml linguist-generated
-/nix-ci.nix linguist-generated
 /.github/workflows/pages.yml linguist-generated
 /.github/workflows/switch-pm-generation.yml linguist-generated
+/.gitignore linguist-generated
+/.vale.ini linguist-generated
+/dhall/** linguist-language=Dhall
+/garnix.yaml linguist-generated
+/nix-ci.nix linguist-generated

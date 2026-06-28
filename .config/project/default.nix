@@ -44,4 +44,5 @@
   services.flakehub.enable = true;
   services.github.enable = true;
   services.github.settings.repository.topics = ["library"];
+  services.github.settings.repository.private = false;
 }

@@ -12,6 +12,14 @@ in  λ(a : Type) →
               combine.buildable
               left.buildable
               right.buildable
+        , -- A section’s language takes precedence over the top-level one, so the
+          -- right wins here, regardless of how other conflicts get resolved.
+          language =
+            Combine.optional
+              Text
+              (λ(_ : Text) → λ(r : Text) → Some r)
+              left.language
+              right.language
         , source-dirs = left.source-dirs # right.source-dirs
         , default-extensions =
             left.default-extensions # right.default-extensions

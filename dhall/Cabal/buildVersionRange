@@ -19,7 +19,7 @@ let buildVersionRange =
                           λ(acc : { comma : Bool, res : Text }) →
                             { comma = True
                             , res =
-                                    Pvp.showLax v
+                                    Pvp.show v
                                 ++  (if acc.comma then ", " else "")
                                 ++  acc.res
                             }

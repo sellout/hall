@@ -6,24 +6,35 @@ let P =
 
 let Pvp = ../PVP/package.dhall
 
-in  λ(versions : List Pvp.Version) →
-      if    P.List.null Pvp.Version versions
-      then  ""
-      else        "^>= {"
-              ++  ( List/fold
-                      Pvp.Version
-                      versions
-                      { comma : Bool, res : Text }
-                      ( λ(v : Pvp.Version) →
-                        λ(acc : { comma : Bool, res : Text }) →
-                          { comma = True
-                          , res =
-                                  Pvp.showLax v
-                              ++  (if acc.comma then ", " else "")
-                              ++  acc.res
-                          }
-                      )
-                      { comma = False, res = "" }
-                  ).res
-              ++  "}"
-            : Text
+let buildVersionRange =
+      λ(versions : List Pvp.Version) →
+        if    P.List.null Pvp.Version versions
+        then  ""
+        else        "^>= {"
+                ++  ( List/fold
+                        Pvp.Version
+                        versions
+                        { comma : Bool, res : Text }
+                        ( λ(v : Pvp.Version) →
+                          λ(acc : { comma : Bool, res : Text }) →
+                            { comma = True
+                            , res =
+                                    Pvp.showLax v
+                                ++  (if acc.comma then ", " else "")
+                                ++  acc.res
+                            }
+                        )
+                        { comma = False, res = "" }
+                    ).res
+                ++  "}"
+              : Text
+
+let example0 = assert : buildVersionRange ([] : List Pvp.Version) ≡ ""
+
+let example1 =
+        assert
+      :   buildVersionRange
+            [ Pvp.v [ 4, 18, 0 ], Pvp.v [ 4, 19, 2 ], Pvp.v [ 5, 0, 0 ] ]
+        ≡ "^>= {4.18.0, 4.19.2, 5.0.0}"
+
+in  buildVersionRange

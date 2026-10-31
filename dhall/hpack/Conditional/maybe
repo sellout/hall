@@ -13,19 +13,6 @@ let Conditional = ./Type
 
 let Comparator = ./Comparator/package.dhall
 
-let compare =
-      λ(x : Pvp.Version) →
-      λ(c : Comparator.Type) →
-      λ(y : Pvp.Version) →
-        merge
-          { EQ = Pvp.lessThanEqual x y && Pvp.lessThanEqual y x
-          , GE = Pvp.lessThanEqual y x
-          , GT = Pvp.lessThanEqual x y == False
-          , LT = Pvp.lessThanEqual y x == True
-          , LE = Pvp.lessThanEqual x y
-          }
-          c
-
 let Either = λ(a : Type) → < Left : a | Right : Conditional a >
 
 let maybe =
@@ -35,10 +22,18 @@ let maybe =
       λ(ghcVersion : Pvp.Version) →
       λ(body : a) →
       λ(alt : a) →
-        let cmp =
-              λ(c : Comparator.Type) →
+        let -- Whether every supported GHC is at least `ghcVersion`.
+            supportedVersionsAtLeast =
+              Pvp.lessThanEqual ghcVersion minimumGhcVersion
+
+        let -- Whether every supported GHC is newer than `ghcVersion`.
+            supportedVersionsAbove =
+              Pvp.lessThanEqual minimumGhcVersion ghcVersion == False
+
+        let compareUnless =
+              λ(settled : Bool) →
               λ(single : a) →
-                if    compare minimumGhcVersion c ghcVersion
+                if    settled
                 then  (Either a).Left single
                 else  (Either a).Right
                         ( ./ifGhcImpl
@@ -50,11 +45,11 @@ let maybe =
                         )
 
         in  merge
-              { EQ = cmp Comparator.Type.GT alt
-              , GE = cmp Comparator.Type.GE body
-              , GT = cmp Comparator.Type.GT body
-              , LT = cmp Comparator.Type.GE alt
-              , LE = cmp Comparator.Type.GT alt
+              { EQ = compareUnless supportedVersionsAbove alt
+              , GE = compareUnless supportedVersionsAtLeast body
+              , GT = compareUnless supportedVersionsAbove body
+              , LT = compareUnless supportedVersionsAtLeast alt
+              , LE = compareUnless supportedVersionsAbove alt
               }
               comparator
 

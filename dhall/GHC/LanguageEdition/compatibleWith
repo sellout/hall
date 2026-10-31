@@ -59,7 +59,7 @@ let ghc2021CompatibleWith
                     ( versionExtensions
                         ghc.v8-4-1.version
                         minimumGhcVersion
-                        [ "HexFloatLiterals" ]
+                        [ "EmptyDataDeriving", "HexFloatLiterals" ]
                         ( versionExtensions
                             ghc.v8-0-1.version
                             minimumGhcVersion
@@ -76,9 +76,7 @@ let ghc2021CompatibleWith
                               , "DeriveFunctor"
                               , "DeriveGeneric"
                               , "DeriveTraversable"
-                              , "DerivingStrategies"
                               , "EmptyCase"
-                              , "EmptyDataDeriving"
                               , "ExistentialQuantification"
                               , "ExplicitForAll"
                               , "FlexibleContexts"
@@ -117,20 +115,24 @@ let ghc2024CompatibleWith
               }
         else  let GHC2021 = ghc2021CompatibleWith minimumGhcVersion
 
-              in    GHC2021
-                  ⫽ { name = GHC2024.name
-                    , additionalExtensions =
-                          GHC2021.additionalExtensions
-                        # [ "DataKinds"
-                          , "DerivingStrategies"
-                          , "DisambiguateRecordFields"
-                          , "ExplicitNamespaces"
-                          , "GADTs"
-                          , "LambdaCase"
-                          , "MonoLocalBinds"
-                          , "RoleAnnotations"
-                          ]
-                    }
+              in  versionExtensions
+                    ghc.v8-2-1.version
+                    minimumGhcVersion
+                    [ "DerivingStrategies" ]
+                    (   GHC2021
+                      ⫽ { name = GHC2024.name
+                        , additionalExtensions =
+                              GHC2021.additionalExtensions
+                            # [ "DataKinds"
+                              , "DisambiguateRecordFields"
+                              , "ExplicitNamespaces"
+                              , "GADTs"
+                              , "LambdaCase"
+                              , "MonoLocalBinds"
+                              , "RoleAnnotations"
+                              ]
+                        }
+                    )
 
 let unsupportedBefore8-4 =
       [ "EmptyDataDeriving"

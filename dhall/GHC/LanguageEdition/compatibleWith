@@ -132,6 +132,34 @@ let ghc2024CompatibleWith
                           ]
                     }
 
+let unsupportedBefore8-4 =
+      [ "EmptyDataDeriving"
+      , "HexFloatLiterals"
+      , "NumericUnderscores"
+      , "DeriveLift"
+      , "ImportQualifiedPost"
+      , "StandaloneKindSignatures"
+      ]
+
+let checkGhc2024On7-10 =
+        assert
+      :   (ghc2024CompatibleWith ghc.v7-10-3.version).unsupportedExtensions
+        ≡   [ "TypeApplications" ]
+          # unsupportedBefore8-4
+          # [ "DerivingStrategies" ]
+
+let checkGhc2024On8-2 =
+        assert
+      :   (ghc2024CompatibleWith ghc.v8-2-1.version).unsupportedExtensions
+        ≡ unsupportedBefore8-4
+
+let -- GHC2021 doesn’t include `DerivingStrategies`, so unlike in
+    -- `checkGhc2024On7-10`, it isn’t unsupported here.
+    checkGhc2021On7-10 =
+        assert
+      :   (ghc2021CompatibleWith ghc.v7-10-3.version).unsupportedExtensions
+        ≡ [ "TypeApplications" ] # unsupportedBefore8-4
+
 in  λ(edition : Edition) →
       if    P.Natural.equal edition.year 2024
       then  ghc2024CompatibleWith

@@ -1,12 +1,32 @@
-{-| Compare two [PVP](https://pvp.haskell.org/)-compliant version numbers.
-
-__FIXME__: This doesn’t yet compare any additional components.
+{-| Compare two [PVP](https://pvp.haskell.org/)-compliant version numbers
+    lexicographically, like Cabal’s `Version`. So a version sorts before its
+    extensions: 1.2.3 < 1.2.3.0.
 -}
 let P =
       https://prelude.dhall-lang.org/v20.1.0/package.dhall
         sha256:26b0ef498663d269e4dc6a82b0ee289ec565d683ef4c00d0ebdd25333a5a3c98
 
 let Version = ./Version
+
+let additionalLessThanEqual =
+      λ(xs : List Natural) →
+        List/fold
+          Natural
+          xs
+          (List Natural → Bool)
+          ( λ(x : Natural) →
+            λ(rest : List Natural → Bool) →
+            λ(ys : List Natural) →
+              merge
+                { None = False
+                , Some =
+                    λ(y : Natural) →
+                          P.Natural.lessThan x y
+                      ||  P.Natural.equal x y && rest (P.List.drop 1 Natural ys)
+                }
+                (List/head Natural ys)
+          )
+          (λ(ys : List Natural) → True)
 
 let lessThanEqual =
       λ(x : Version) →
@@ -16,7 +36,10 @@ let lessThanEqual =
             &&  (     P.Natural.lessThan x.major.b y.major.b
                   ||      P.Natural.equal x.major.b y.major.b
                       &&  (     P.Natural.lessThan x.minor y.minor
-                            ||  P.Natural.equal x.minor y.minor && True
+                            ||      P.Natural.equal x.minor y.minor
+                                &&  additionalLessThanEqual
+                                      x.additional
+                                      y.additional
                           )
                 )
 

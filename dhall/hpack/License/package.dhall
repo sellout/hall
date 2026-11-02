@@ -34,6 +34,7 @@ in  { Type = License
     , and = ./and
     , both = ./both
     , either = ./either
+    , id = ./id
     , licenseRef
     , or
     , `with`

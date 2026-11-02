@@ -1,0 +1,93 @@
+{-| The top-level type for hpack-dhall.
+
+    The `rec` parameter defines how components recurse (which occurs via
+    `Conditional`s). The general form would use something like Dada’s `Mu` type,
+    but that can be avoided if you’re willing to limit how deeply `Conditional`s
+    can nest. For example,
+
+  - `λ(f : Type → Type) → f <>` – no `Conditional`s are possible;
+  - `λ(f : Type → Type) → f (f <>)` – `Conditional`s are possible, but they
+  - can’t be nested;
+  - `λ(f : Type → Type) → f (f (f <>))` – `Conditional`s can be nested one level;
+  - etc.
+
+    Using the type functions instead of `Mu` also means you can avoid the
+    `embed` wrapper, which can help with clarity.
+-}
+let Category = ../../Hackage/Category/Type
+
+let P =
+      https://prelude.dhall-lang.org/v20.1.0/package.dhall
+        sha256:26b0ef498663d269e4dc6a82b0ee289ec565d683ef4c00d0ebdd25333a5a3c98
+
+let Benchmark = ../Benchmark/package.dhall
+
+let BuildType = ../BuildType/Type
+
+let Common = ../Common/Type
+
+let CustomSetup = ../CustomSetup/Type
+
+let Default = ../Default/Type
+
+let Executable = ../Executable/package.dhall
+
+let Flag = ../Flag/Type
+
+let Library = ../Library/Type
+
+let License = ../License/Type
+
+let Sublibrary = ../Sublibrary/Type
+
+let Test = ../Test/package.dhall
+
+in  λ(rec : (Type → Type) → Type) →
+        Common (rec Common)
+      ⩓ { name : Text
+        , -- This is optional in hpack, but not here, as it’s important the
+          -- number be explicit, even if it’s `"0.0.0".`
+          version : Text
+        , synopsis : Optional Text
+        , description : Optional Text
+        , category : List Category
+        , stability : Optional Text
+        , homepage : Optional Text
+        , bug-reports : Optional Text
+        , author : List Text
+        , maintainer : List Text
+        , copyright : List Text
+        , -- The defaulting here is a bit complicated, but this preserves it in
+          -- order to support hpack’s inference from `license-file`. If this is
+          -- None, hpack will try to infer a value from `license-file`. If it
+          -- can’t Cabal will default it to “NONE” (which I think should
+          -- actually be “NoAssertion”). The `License` type is defined to
+          -- support some reduction while still producing a value that is
+          -- understood by Cabal.
+          --
+          -- The oddity is that a `None License` operates as “NoAssertion” as
+          -- far as this library is concerned, but if it’s `None License` when
+          -- this is converted to Cabal, it’s treated as “NONE”.
+          license : Optional License
+        , license-file : List Text
+        , tested-with : List Text
+        , -- The defaulting rules for this are slightly complicated
+          -- (https://cabal.readthedocs.io/en/stable/cabal-package-description-file.html#pkg-field-build-type),
+          -- so we leave it to Cabal to figure out.
+          build-type : Optional BuildType
+        , extra-source-files : List Text
+        , extra-doc-files : List Text
+        , data-files : List Text
+        , data-dir : Optional Text
+        , github : Optional Text
+        , git : Optional Text
+        , custom-setup : Optional CustomSetup
+        , flags : P.Map.Type Text Flag
+        , library : Optional (rec Library)
+        , internal-libraries : P.Map.Type Text (rec Sublibrary)
+        , executables : P.Map.Type Text (rec Executable.Type)
+        , executable : Optional (rec Executable.Type)
+        , tests : P.Map.Type Text (rec Test.Type)
+        , benchmarks : P.Map.Type Text (rec Benchmark.Type)
+        , defaults : List Default
+        }

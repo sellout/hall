@@ -1,0 +1,69 @@
+{-| A default value for the `Package` type, generally used via ./schema.
+
+This needs to have defaults for all fields, because we don’t know which ones
+will be set at the top level vs in `Conditional`s.
+
+See ./Type for an explanation of the `rec` parameter.
+-}
+let P =
+      https://prelude.dhall-lang.org/v20.1.0/package.dhall
+        sha256:26b0ef498663d269e4dc6a82b0ee289ec565d683ef4c00d0ebdd25333a5a3c98
+
+let Category = ../../../Hackage/Category/Type
+
+let Benchmark = ../../Benchmark/package.dhall
+
+let BuildType = ../../BuildType/Type
+
+let Common = ../../Common/package.dhall
+
+let CustomSetup = ../../CustomSetup/Type
+
+let Default = ../../Default/Type
+
+let Executable = ../../Executable/package.dhall
+
+let Flag = ../../Flag/Type
+
+let Library = ../../Library/Type
+
+let License = ../../License/Type
+
+let Sublibrary = ../../Sublibrary/Type
+
+let Test = ../../Test/package.dhall
+
+let Self = ./Type
+
+in  λ(rec : (Type → Type) → Type) →
+          Common.default (rec Common.Type)
+        ∧ { synopsis = None Text
+          , description = None Text
+          , category = [] : List Category
+          , stability = None Text
+          , homepage = None Text
+          , bug-reports = None Text
+          , author = [] : List Text
+          , maintainer = [] : List Text
+          , copyright = [] : List Text
+          , license = None License
+          , license-file = [] : List Text
+          , tested-with = [] : List Text
+          , build-type = None BuildType
+          , extra-source-files = [] : List Text
+          , extra-doc-files = [] : List Text
+          , data-files = [] : List Text
+          , data-dir = None Text
+          , github = None Text
+          , git = None Text
+          , custom-setup = None CustomSetup
+          , flags = P.Map.empty Text Flag
+          , library = None (rec Library)
+          , internal-libraries = P.Map.empty Text (rec Sublibrary)
+          , executables = P.Map.empty Text (rec Executable.Type)
+          , executable = None (rec Executable.Type)
+          , tests = P.Map.empty Text (rec Test.Type)
+          , benchmarks = P.Map.empty Text (rec Benchmark.Type)
+          , defaults = [] : List Default
+          }
+      : Self rec

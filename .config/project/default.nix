@@ -15,6 +15,9 @@
   ## formatting
   project.file.".dir-locals.el".source = ../emacs/.dir-locals.el;
 
+  ## These are Dhall, not prose.
+  programs.vale.excludes = ["./templates/hpack/*"];
+
   ## publishing
   services.github.settings.repository.private = false;
   services.github.settings.repository.topics = ["library"];

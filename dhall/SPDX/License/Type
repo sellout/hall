@@ -1,0 +1,9 @@
+{-| This is a flexible SPDX license type, which can be used for recursive
+    compound-expressions, or for hpack-dhall, when specialized to `Text`.
+
+- `NOASSERTION` is the identity in all conjunctions.
+- `NONE` is the annihilator in `and` and treated as a weaker identity in `or`.
+- `Expression` is any other arbitrary compound-expression.
+-}
+λ(compound-expression : Type) →
+  < NOASSERTION | NONE | Expression : compound-expression >

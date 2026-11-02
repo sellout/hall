@@ -1,0 +1,4 @@
+{-| A synonym for `Expression` that indicates we’re intending to use a license
+    id from https://spdx.org/licenses.
+-}
+let License = ./Type in \(id : Text) -> Some (License.Expression id)

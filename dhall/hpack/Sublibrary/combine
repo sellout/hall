@@ -1,0 +1,26 @@
+let Combine = ../Combine/package.dhall
+
+let Library = ../Library/package.dhall
+
+let Visibility = ../Visibility/Type
+
+let DefaultType = ./DefaultType
+
+let extractLibrary = ./extractLibrary
+
+in  λ(a : Type) →
+    λ ( combine
+      : { buildable : Combine.Type Bool
+        , exposed : Bool → Bool → Bool
+        , visibility : Visibility → Visibility → Visibility
+        }
+      ) →
+    λ(left : DefaultType a) →
+    λ(right : DefaultType a) →
+          Library.combine
+            a
+            combine.{ buildable, exposed }
+            (extractLibrary a left)
+            (extractLibrary a right)
+        ∧ { visibility = combine.visibility left.visibility right.visibility }
+      : DefaultType a

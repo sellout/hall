@@ -1,0 +1,1 @@
+let Dependencies = ../Dependencies/Type in { dependencies : Dependencies }

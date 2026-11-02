@@ -1,5 +1,8 @@
-let Alternative = ../Alternative/Type
+{-|
 
-in  < If : { condition : Text } ⩓ Alternative
-    | OrElse : { condition : Text, `then` : Alternative, `else` : Alternative }
-    >
+TODO: Support `< When : { condition : Text, fields : a } | If { … } >` in
+      future. This isn’t currently possible because for the non-`else` variant,
+      `hpack` wants the fields to be merged with the `condition`. Address this
+      once Dhall has row types, or we get away from hpack as an intermediary.
+-}
+λ(a : Type) → { condition : Text, `then` : a, `else` : a }

@@ -22,11 +22,11 @@ let checkMyStandardLicense =
         assert
       :   or
             [ `with` "AGPL-3.0-only" "Universal-FOSS-exception-1.0"
-            , Some (License.Expression (licenseRef (None Text) "commercial"))
+            , Some (License.Expression (licenseRef (None Text) "proprietary"))
             ]
         ≡ Some
             ( License.Expression
-                "AGPL-3.0-only WITH Universal-FOSS-exception-1.0 OR LicenseRef-commercial"
+                "AGPL-3.0-only WITH Universal-FOSS-exception-1.0 OR LicenseRef-proprietary"
             )
 
 in  { Type = License
@@ -34,6 +34,7 @@ in  { Type = License
     , and = ./and
     , both = ./both
     , either = ./either
+    , id = ./id
     , licenseRef
     , or
     , `with`

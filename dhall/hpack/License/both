@@ -1,4 +1,4 @@
-{-| `or` with exactly two arguments, for use as a combiner.
+{-| `and` with exactly two arguments, for use as a combiner.
 -}
 let License = ./Type
 

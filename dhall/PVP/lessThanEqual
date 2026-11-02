@@ -1,6 +1,6 @@
-{-| Compare two [PVP](https://pvp.haskell.org/)-compliant version numbers.
-
-__FIXME__: This doesn’t yet compare any additional components.
+{-| Compare two [PVP](https://pvp.haskell.org/)-compliant version numbers
+    lexicographically, like Cabal’s `Version`. So a version sorts before its
+    extensions: 1.2.3 < 1.2.3.0.
 -}
 let P =
       https://prelude.dhall-lang.org/v20.1.0/package.dhall
@@ -8,13 +8,68 @@ let P =
 
 let Version = ./Version
 
-in  λ(x : Version) →
-    λ(y : Version) →
-          P.Natural.lessThan x.major.a y.major.a
-      ||      P.Natural.equal x.major.a y.major.a
-          &&  (     P.Natural.lessThan x.major.b y.major.b
-                ||      P.Natural.equal x.major.b y.major.b
-                    &&  (     P.Natural.lessThan x.minor y.minor
-                          ||  P.Natural.equal x.minor y.minor && True
-                        )
-              )
+let additionalLessThanEqual =
+      λ(xs : List Natural) →
+        List/fold
+          Natural
+          xs
+          (List Natural → Bool)
+          ( λ(x : Natural) →
+            λ(rest : List Natural → Bool) →
+            λ(ys : List Natural) →
+              merge
+                { None = False
+                , Some =
+                    λ(y : Natural) →
+                          P.Natural.lessThan x y
+                      ||  P.Natural.equal x y && rest (P.List.drop 1 Natural ys)
+                }
+                (List/head Natural ys)
+          )
+          (λ(ys : List Natural) → True)
+
+let lessThanEqual =
+      λ(x : Version) →
+      λ(y : Version) →
+            P.Natural.lessThan x.major.a y.major.a
+        ||      P.Natural.equal x.major.a y.major.a
+            &&  (     P.Natural.lessThan x.major.b y.major.b
+                  ||      P.Natural.equal x.major.b y.major.b
+                      &&  (     P.Natural.lessThan x.minor y.minor
+                            ||      P.Natural.equal x.minor y.minor
+                                &&  additionalLessThanEqual
+                                      x.additional
+                                      y.additional
+                          )
+                )
+
+let v = ./v
+
+let checkComponents =
+      assert : lessThanEqual (v [ 9, 6, 1 ]) (v [ 10, 0, 0 ]) ≡ True
+
+let checkComponentsReversed =
+      assert : lessThanEqual (v [ 10, 0, 0 ]) (v [ 9, 6, 1 ]) ≡ False
+
+let checkAdditionalSame =
+      assert : lessThanEqual (v [ 9, 6, 1, 1 ]) (v [ 9, 6, 1, 1 ]) ≡ True
+
+let checkAdditionalLess =
+      assert : lessThanEqual (v [ 9, 6, 1, 1 ]) (v [ 9, 6, 1, 2 ]) ≡ True
+
+let checkAdditionalGreater =
+      assert : lessThanEqual (v [ 9, 6, 1, 2 ]) (v [ 9, 6, 1, 1 ]) ≡ False
+
+let checkPrefix =
+      assert : lessThanEqual (v [ 9, 6, 1 ]) (v [ 9, 6, 1, 0 ]) ≡ True
+
+let checkExtension =
+      assert : lessThanEqual (v [ 9, 6, 1, 0 ]) (v [ 9, 6, 1 ]) ≡ False
+
+let checkDifferentLengths =
+      assert : lessThanEqual (v [ 9, 6, 1, 1, 5 ]) (v [ 9, 6, 1, 2 ]) ≡ True
+
+let checkDifferentLengthsReversed =
+      assert : lessThanEqual (v [ 9, 6, 1, 2 ]) (v [ 9, 6, 1, 1, 5 ]) ≡ False
+
+in  lessThanEqual

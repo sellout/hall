@@ -49,11 +49,11 @@ in  λ(rec : (Type → Type) → Type) →
         , git : Optional Text
         , custom-setup : Optional CustomSetup
         , flags : P.Map.Type Text Flag
-        , library : Optional (rec Library)
-        , internal-libraries : P.Map.Type Text (rec Sublibrary)
-        , executables : P.Map.Type Text (rec Executable.Type)
-        , executable : Optional (rec Executable.Type)
-        , tests : P.Map.Type Text (rec Test.Type)
-        , benchmarks : P.Map.Type Text (rec Benchmark.Type)
+        , library : Optional (Library (rec Library))
+        , internal-libraries : P.Map.Type Text (Sublibrary (rec Sublibrary))
+        , executables : P.Map.Type Text (Executable.Type (rec Executable.Type))
+        , executable : Optional (Executable.Type (rec Executable.Type))
+        , tests : P.Map.Type Text (Test.Type (rec Test.Type))
+        , benchmarks : P.Map.Type Text (Benchmark.Type (rec Benchmark.Type))
         , defaults : List Default
         }

@@ -30,8 +30,8 @@ in  λ(rec : (Type → Type) → Type) →
         , github : Combine.Type Text
         , git : Combine.Type Text
         , custom-setup : Combine.Type CustomSetup
-        , library : Combine.Type (rec Library)
-        , executable : Combine.Type (rec Executable.Type)
+        , library : Combine.Type (Library (rec Library))
+        , executable : Combine.Type (Executable.Type (rec Executable.Type))
         }
       ) →
     λ(left : DefaultType rec) →
@@ -111,7 +111,7 @@ in  λ(rec : (Type → Type) → Type) →
           , flags = left.flags # right.flags
           , library =
               Combine.optional
-                (rec Library)
+                (Library (rec Library))
                 combine.library
                 left.library
                 right.library
@@ -120,7 +120,7 @@ in  λ(rec : (Type → Type) → Type) →
           , executables = left.executables # right.executables
           , executable =
               Combine.optional
-                (rec Executable.Type)
+                (Executable.Type (rec Executable.Type))
                 combine.executable
                 left.executable
                 right.executable

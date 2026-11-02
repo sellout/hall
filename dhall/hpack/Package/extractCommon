@@ -6,6 +6,7 @@ in  λ(rec : (Type → Type) → Type) →
     λ(self : DefaultType rec) →
         self.{ build-tools
              , buildable
+             , language
              , c-sources
              , cc-options
              , cpp-options

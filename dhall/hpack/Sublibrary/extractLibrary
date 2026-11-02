@@ -6,6 +6,7 @@ in  λ(a : Type) →
     λ(self : DefaultType a) →
         self.{ build-tools
              , buildable
+             , language
              , c-sources
              , cc-options
              , cpp-options

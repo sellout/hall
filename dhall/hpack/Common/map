@@ -11,6 +11,7 @@ in  λ(a : Type) →
     λ(f : a → b) →
     λ(self : Self a) →
         self.{ buildable
+             , language
              , source-dirs
              , default-extensions
              , other-extensions

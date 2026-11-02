@@ -3,10 +3,22 @@
 NB: Benchmarks, executables, and tests all have the same type, so `Binary` is
     the shared form.
 -}
-λ(rec : (Type → Type) → Type) →
-  { Binary = ./Binary/schema (rec ./Binary/Type)
-  , Common = ./Common/schema (rec ./Common/Type)
-  , Library = ./Library/schema (rec ./Library/Type)
-  , Package = ./Package/schema rec
-  , Sublibrary = ./Sublibrary/schema (rec ./Sublibrary/Type)
-  }
+let schemas =
+      λ(rec : (Type → Type) → Type) →
+        { Binary = ./Binary/schema (rec ./Binary/Type)
+        , Common = ./Common/schema (rec ./Common/Type)
+        , Library = ./Library/schema (rec ./Library/Type)
+        , Package = ./Package/schema rec
+        , Sublibrary = ./Sublibrary/schema (rec ./Sublibrary/Type)
+        }
+
+let S = schemas (λ(f : Type → Type) → f <>)
+
+let library = Some S.Library::{=}
+
+let testSectionsShareTheSchema =
+        assert
+      :   (S.Package::{ name = "test", version = "0.0.0", library }).library
+        ≡ library
+
+in  schemas

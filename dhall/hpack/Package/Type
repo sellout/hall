@@ -5,10 +5,10 @@
     but that can be avoided if you’re willing to limit how deeply `Conditional`s
     can nest. For example,
 
-  - `λ(f : Type → Type) → f <>` – no `Conditional`s are possible;
-  - `λ(f : Type → Type) → f (f <>)` – `Conditional`s are possible, but they
-  - can’t be nested;
-  - `λ(f : Type → Type) → f (f (f <>))` – `Conditional`s can be nested one level;
+  - `λ(_ : Type → Type) → <>` – no `Conditional`s are possible;
+  - `λ(f : Type → Type) → f <>` – `Conditional`s are possible, but they can’t be
+    nested;
+  - `λ(f : Type → Type) → f (f <>)` – `Conditional`s can be nested one level;
   - etc.
 
     Using the type functions instead of `Mu` also means you can avoid the
@@ -83,11 +83,11 @@ in  λ(rec : (Type → Type) → Type) →
         , git : Optional Text
         , custom-setup : Optional CustomSetup
         , flags : P.Map.Type Text Flag
-        , library : Optional (rec Library)
-        , internal-libraries : P.Map.Type Text (rec Sublibrary)
-        , executables : P.Map.Type Text (rec Executable.Type)
-        , executable : Optional (rec Executable.Type)
-        , tests : P.Map.Type Text (rec Test.Type)
-        , benchmarks : P.Map.Type Text (rec Benchmark.Type)
+        , library : Optional (Library (rec Library))
+        , internal-libraries : P.Map.Type Text (Sublibrary (rec Sublibrary))
+        , executables : P.Map.Type Text (Executable.Type (rec Executable.Type))
+        , executable : Optional (Executable.Type (rec Executable.Type))
+        , tests : P.Map.Type Text (Test.Type (rec Test.Type))
+        , benchmarks : P.Map.Type Text (Benchmark.Type (rec Benchmark.Type))
         , defaults : List Default
         }

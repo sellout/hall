@@ -1,11 +1,6 @@
-{
-  config,
-  flaky,
-  lib,
-  pkgs,
-  supportedSystems,
-  ...
-}: {
+### All available options for this file are listed in
+### https://sellout.github.io/project-manager/options.xhtml
+{pkgs, ...}: {
   project = {
     name = "hall";
     summary = "The corridor connecting Dhall and Haskell";

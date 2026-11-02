@@ -1,3 +1,9 @@
+{-| Returns a variant of the provided language edition that is compatible with
+    the provided GHC version.
+
+This allows us to take advantage of newer language editions to the extent we
+can, even when we use GHC versions that predate those editions.
+-}
 let P =
       https://prelude.dhall-lang.org/v20.1.0/package.dhall
         sha256:26b0ef498663d269e4dc6a82b0ee289ec565d683ef4c00d0ebdd25333a5a3c98
@@ -59,7 +65,7 @@ let ghc2021CompatibleWith
                     ( versionExtensions
                         ghc.v8-4-1.version
                         minimumGhcVersion
-                        [ "HexFloatLiterals" ]
+                        [ "EmptyDataDeriving", "HexFloatLiterals" ]
                         ( versionExtensions
                             ghc.v8-0-1.version
                             minimumGhcVersion
@@ -76,9 +82,7 @@ let ghc2021CompatibleWith
                               , "DeriveFunctor"
                               , "DeriveGeneric"
                               , "DeriveTraversable"
-                              , "DerivingStrategies"
                               , "EmptyCase"
-                              , "EmptyDataDeriving"
                               , "ExistentialQuantification"
                               , "ExplicitForAll"
                               , "FlexibleContexts"
@@ -117,20 +121,52 @@ let ghc2024CompatibleWith
               }
         else  let GHC2021 = ghc2021CompatibleWith minimumGhcVersion
 
-              in    GHC2021
-                  ⫽ { name = GHC2024.name
-                    , additionalExtensions =
-                          GHC2021.additionalExtensions
-                        # [ "DataKinds"
-                          , "DerivingStrategies"
-                          , "DisambiguateRecordFields"
-                          , "ExplicitNamespaces"
-                          , "GADTs"
-                          , "LambdaCase"
-                          , "MonoLocalBinds"
-                          , "RoleAnnotations"
-                          ]
-                    }
+              in  versionExtensions
+                    ghc.v8-2-1.version
+                    minimumGhcVersion
+                    [ "DerivingStrategies" ]
+                    (   GHC2021
+                      ⫽ { name = GHC2024.name
+                        , additionalExtensions =
+                              GHC2021.additionalExtensions
+                            # [ "DataKinds"
+                              , "DisambiguateRecordFields"
+                              , "ExplicitNamespaces"
+                              , "GADTs"
+                              , "LambdaCase"
+                              , "MonoLocalBinds"
+                              , "RoleAnnotations"
+                              ]
+                        }
+                    )
+
+let unsupportedBefore8-4 =
+      [ "EmptyDataDeriving"
+      , "HexFloatLiterals"
+      , "NumericUnderscores"
+      , "DeriveLift"
+      , "ImportQualifiedPost"
+      , "StandaloneKindSignatures"
+      ]
+
+let checkGhc2024On7-10 =
+        assert
+      :   (ghc2024CompatibleWith ghc.v7-10-3.version).unsupportedExtensions
+        ≡   [ "TypeApplications" ]
+          # unsupportedBefore8-4
+          # [ "DerivingStrategies" ]
+
+let checkGhc2024On8-2 =
+        assert
+      :   (ghc2024CompatibleWith ghc.v8-2-1.version).unsupportedExtensions
+        ≡ unsupportedBefore8-4
+
+let -- GHC2021 doesn’t include `DerivingStrategies`, so unlike in
+    -- `checkGhc2024On7-10`, it isn’t unsupported here.
+    checkGhc2021On7-10 =
+        assert
+      :   (ghc2021CompatibleWith ghc.v7-10-3.version).unsupportedExtensions
+        ≡ [ "TypeApplications" ] # unsupportedBefore8-4
 
 in  λ(edition : Edition) →
       if    P.Natural.equal edition.year 2024

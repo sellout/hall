@@ -1,11 +1,6 @@
-{
-  config,
-  flaky,
-  lib,
-  pkgs,
-  supportedSystems,
-  ...
-}: {
+### All available options for this file are listed in
+### https://sellout.github.io/project-manager/options.xhtml
+{pkgs, ...}: {
   project = {
     name = "hall";
     summary = "The corridor connecting Dhall and Haskell";
@@ -17,32 +12,10 @@
     ];
   };
 
-  ## dependency managerment
-  services.renovate.enable = true;
-
-  ## development
-  programs = {
-    direnv.enable = true;
-    # This should default by whether there is a .git file/dir (and whether it’s
-    # a file (worktree) or dir determines other things – like where hooks
-    # are installed.
-    git.enable = true;
-  };
-
   ## formatting
-  editorconfig.enable = true;
-  programs = {
-    treefmt.enable = true;
-    vale.enable = true;
-  };
   project.file.".dir-locals.el".source = ../emacs/.dir-locals.el;
 
-  ## CI
-  services.garnix.enable = true;
-
   ## publishing
-  services.flakehub.enable = true;
-  services.github.enable = true;
-  services.github.settings.repository.topics = ["library"];
   services.github.settings.repository.private = false;
+  services.github.settings.repository.topics = ["library"];
 }

@@ -1,18 +1,11 @@
 # $^{d}ha_{ske}ll$
 
-[![built with garnix](https://img.shields.io/endpoint?url=https%3A%2F%2Fgarnix.io%2Fapi%2Fbadges%2Fsellout%2Fhall)](https://garnix.io/repo/sellout/hall)
+[![Nix CI](https://nix-ci.com/badge/gh:sellout:hall)](https://nix-ci.com/gh:sellout:hall)
+[![Project Manager](https://img.shields.io/badge/%20-Project%20Manager-%235277C3?logo=nixos&labelColor=%23cccccc)](https://sellout.github.io/project-manager/)
 
 The corridor connecting Dhall and Haskell
 
 A collection of various tools in Dhall for working with Haskell.
-
-## usage
-
-<!-- vale Vale.Terms = NO -->
-
-This is especially helpful with [hpack-dhall](https://github.com/cabalism/hpack-dhall) or [dhall-to-cabal](https://github.com/dhall-lang/dhall-to-cabal), but the types and functions here are general enough to use whenever you work with Haskell from Dhall.
-
-<!-- vale Vale.Terms = YES -->
 
 ## documentation
 
@@ -20,15 +13,15 @@ API docs are on [GitHub Pages](https://sellout.github.io/hall).
 
 ## development environment
 
-We recommend the following steps to make working in this repository as easy as possible.
+We recommend the following steps to make working in this repository easier.
 
 ### `direnv allow`
 
-This command ensures that any work you do within this repository happens within a consistent reproducible environment. That environment provides various debugging tools, etc. When you leave this directory, you will leave that environment behind, so it doesn’t impact anything else on your system.
+This command ensures that any work you do within this repository happens within a consistent reproducible environment. That environment provides various debugging tools, etc. When you leave this directory, you leave that environment behind, so it doesn’t impact anything else on your system.
 
 ### `git config --local include.path ../.cache/git/config`
 
-This will apply our repository-specific Git configuration to `git` commands run against this repository. It’s lightweight (you should definitely look at it before applying this command) – it does things like telling `git blame` to ignore formatting-only commits.
+This applies our repository-specific Git configuration to `git` commands run against this repository. It’s lightweight (you should definitely look at it before applying this command) – it does things like telling `git blame` to ignore formatting-only commits.
 
 ## building & development
 
